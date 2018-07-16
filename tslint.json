@@ -96,7 +96,7 @@
     ],
     "component-selector": [
       true,
-      "element",
+      ["element", "attribute"],
       "my",
       "kebab-case"
     ],

@@ -1,0 +1,13 @@
+td{
+    //background-color: mediumaquamarine;
+    background-color: antiquewhite;
+    color: black;
+    height: 65px;
+    width: 13%;
+    &:not(.other-month):hover {
+        background-color: bisque;
+    }
+    &.other-month{
+        background-color: cornsilk;
+    }
+}

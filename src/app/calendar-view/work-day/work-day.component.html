@@ -1,0 +1,6 @@
+<nav>
+    <a routerLink="/task-list">
+        {{day.day}}
+        <div [ngClass]="day.extraMinutes < 0 ? 'negative' : 'positive' ">{{day.extraMinutes}}</div>
+    </a>
+</nav>

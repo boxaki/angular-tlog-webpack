@@ -1,0 +1,18 @@
+<div class="container-fluid">
+    <my-pager></my-pager>    
+    <div class="table-responsive">
+        
+        <table class="table table-bordered">
+            <thead class="text-center">
+                <tr>
+                    <th *ngFor="let day of days">{{day}}</th>                    
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let week of month" my-week [week]="week"></tr>            
+            </tbody>
+        </table>            
+    </div>
+   <my-monthly-stats></my-monthly-stats>
+   <my-activate-day></my-activate-day>
+</div>

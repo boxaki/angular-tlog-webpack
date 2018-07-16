@@ -1,0 +1,6 @@
+<td *ngFor="let oneDay of week.days" 
+    [ngClass]="oneDay.type ==='other-month'? 'other-month' : null"
+    [attr.id]="oneDay.type != 'other-month' ? oneDay.year + '-' + oneDay.month + '-' + oneDay.day : null">   
+    <my-simple-day *ngIf="oneDay.type === 'simple-day'" [day]="oneDay"></my-simple-day>
+    <my-work-day *ngIf="oneDay.type === 'workday'" [day]="oneDay"></my-work-day>    
+</td>

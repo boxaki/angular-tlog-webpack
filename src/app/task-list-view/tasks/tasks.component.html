@@ -1,0 +1,28 @@
+<div class="table-responsive" id="taskList" style="margin: 10px 0px">
+    <table class="table table-bordered">
+        <thead class="text-center">
+            <tr>
+                <th>Task Id</th>
+                <th>Comment</th>
+                <th>Start time</th>
+                <th>End time</th>
+                <th>Length</th>
+                <th>Edit</th>                        
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let task of tasksOfDay">
+                <td>{{task.id}}</td>
+                <td>{{task.comment}}</td>
+                <td>{{task.startTime}}</td>
+                <td>{{task.endTime}}</td>                
+                <td>{{task.minPerTask}}</td>
+                <td><a data-toggle="modal" data-target="#edit_task">Edit</a></td>
+            </tr>
+            <tr>
+                <td class="text-center" colspan="6"><a data-toggle="modal" data-target="#new_task">+ New Task</a></td>
+            </tr>
+
+        </tbody>
+    </table>                
+</div>
