@@ -12,9 +12,9 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>450</td>
-                        <td>660</td>                        
-                        <td class="positive">210</td>
+                        <td>{{tasksService.workDayForStats?.requiredMinPerDay}}</td>
+                        <td>{{tasksService.workDayForStats?.sumPerDay}}</td>                        
+                        <td [ngClass]="tasksService.workDayForStats?.extraMinPerDay < 0 ? 'negative' : 'positive' ">{{tasksService.workDayForStats?.extraMinPerDay}}</td>
                     </tr>
                 </tbody>
             </table>

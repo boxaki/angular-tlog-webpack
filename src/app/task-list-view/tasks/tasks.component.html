@@ -10,15 +10,8 @@
                 <th>Edit</th>                        
             </tr>
         </thead>
-        <tbody>
-            <tr *ngFor="let task of tasksOfDay">
-                <td>{{task.id}}</td>
-                <td>{{task.comment}}</td>
-                <td>{{task.startTime}}</td>
-                <td>{{task.endTime}}</td>                
-                <td>{{task.minPerTask}}</td>
-                <td><a data-toggle="modal" data-target="#edit_task">Edit</a></td>
-            </tr>
+        <tbody>            
+            <tr *ngFor="let task of tasksService.tasksOfDay" my-task [task]="task"></tr>
             <tr>
                 <td class="text-center" colspan="6"><a data-toggle="modal" data-target="#new_task">+ New Task</a></td>
             </tr>

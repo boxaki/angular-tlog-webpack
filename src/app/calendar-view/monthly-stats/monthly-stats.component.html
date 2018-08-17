@@ -12,9 +12,9 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td id="required_min">200</td>
-                        <td id="sum_of_month">150</td>                        
-                        <td id="extra_min" class="negative">-50</td>
+                        <td>{{calendarService.requiredMinPerMonth}}</td>
+                        <td>{{calendarService.sumPerMonth}}</td>                        
+                        <td [ngClass]="calendarService.extraMinPerMonth < 0 ? 'negative': 'positive'">{{calendarService.extraMinPerMonth}}</td>
                     </tr>
                     
                 </tbody>

@@ -4,7 +4,7 @@
         <button type="button" class="btn btn-primary btn-lg" (click)="setPreviousMonth()">&lt;</button>
         <div class="btn-group">
             <button type="button" class="btn btn-primary btn-lg dropdown-toggle" data-toggle="dropdown">
-                <span id="year">{{actualDay | date :'yyyy'}}</span><span class="caret"></span>
+                <span id="year">{{dateService.currentDate | async | date :'yyyy'}}</span><span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">
                 <li><a href="#">2017</a></li>
@@ -13,7 +13,7 @@
         </div>
         <div class="btn-group">
             <button type="button" class="btn btn-primary btn-lg dropdown-toggle" data-toggle="dropdown">
-                <span id="month">{{actualDay | date:'MM'}}</span><span class="caret"></span>
+                <span id="month">{{dateService.currentDate | async | date:'MM'}}</span><span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">
                 <li><a href="#">02</a></li>

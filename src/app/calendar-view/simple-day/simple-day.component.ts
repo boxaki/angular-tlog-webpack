@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { Day } from '../../shared/classes/day';
+import { DateService } from '../../shared/services/date.service';
 
 @Component({
     selector: 'my-simple-day',
@@ -9,13 +10,15 @@ import { Day } from '../../shared/classes/day';
 })
 export class SimpleDayComponent implements OnInit {
     @Input() day: Day;
-    id: string;
 
-    constructor() {
+    constructor(private dateService: DateService) {
     }
 
     ngOnInit() {
-        this.id = '' + this.day.year + '-' + this.day.month + '-' + this.day.day;
+    }
+
+    setSelectedDay(): void {
+        this.dateService.setSelectedDay(this.day);
     }
 
 }

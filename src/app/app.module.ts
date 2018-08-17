@@ -1,6 +1,6 @@
 import { NgModule, ApplicationRef } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
@@ -19,15 +19,20 @@ import { WorkDayComponent } from './calendar-view/work-day/work-day.component';
 import { MonthlyStatsComponent } from './calendar-view/monthly-stats/monthly-stats.component';
 import { ActivateDayComponent } from './calendar-view/activate-day/activate-day.component';
 import { TasksComponent } from './task-list-view/tasks/tasks.component';
+import { TaskComponent } from './task-list-view/tasks/task/task.component';
 import { DailyStatsComponent } from './task-list-view/daily-stats/daily-stats.component';
 import { EditTaskComponent } from './task-list-view/edit-task/edit-task.component';
+import { NewTaskComponent } from './task-list-view/new-task/new-task.component';
 
 import { DateService } from './shared/services/date.service';
+import { HttpService } from './shared/services/http.service';
+import { CalendarService } from './shared/services/calendar.service';
+import { TasksService } from './shared/services/tasks.service';
 
 @NgModule({
   imports: [
     BrowserModule,
-    HttpModule,
+    HttpClientModule,
     FormsModule,
     routing
   ],
@@ -43,12 +48,17 @@ import { DateService } from './shared/services/date.service';
     MonthlyStatsComponent,
     ActivateDayComponent,
     TasksComponent,
+    TaskComponent,
     DailyStatsComponent,
-    EditTaskComponent
+    EditTaskComponent,
+    NewTaskComponent
   ],
   providers: [
     ApiService,
-    DateService
+    DateService,
+    HttpService,
+    CalendarService,
+    TasksService
   ],
   bootstrap: [AppComponent]
 })
