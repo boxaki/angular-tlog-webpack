@@ -17,8 +17,10 @@ export class TaskComponent implements OnInit {
     ngOnInit() {
     }
 
+    /**
+     * Selects the task for modification/deletion.
+     */
     setSelectedTask() {
-        console.log('select task');
         this.tasksService.setSelectedTask(this.task);
     }
 

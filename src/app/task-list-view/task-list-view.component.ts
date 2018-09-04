@@ -10,8 +10,11 @@ export class TaskListViewComponent implements OnInit {
 
   constructor(public tasksService: TasksService) { }
 
+  /**
+   * Updates the view when task-list-view is selected.
+   */
   ngOnInit() {
-    console.log('task-list ngOnInit');
+    this.tasksService.loadTasksAndStatsOfDay();
   }
 
 }

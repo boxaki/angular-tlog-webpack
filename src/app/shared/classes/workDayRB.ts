@@ -1,4 +1,4 @@
-export class WorkDayRB {
+export interface WorkDayRB {
     year: number;
     month: number;
     day: number;

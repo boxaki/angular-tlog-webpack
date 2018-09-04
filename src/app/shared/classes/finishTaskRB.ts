@@ -1,4 +1,4 @@
-export class FinishTaskRB {
+export interface FinishTaskRB {
     year: number;
     month: number;
     day: number;

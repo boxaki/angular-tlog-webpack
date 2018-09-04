@@ -1,5 +1,5 @@
 import { Day } from './day';
 
-export class Week {
+export interface Week {
     days: Day[];
 }

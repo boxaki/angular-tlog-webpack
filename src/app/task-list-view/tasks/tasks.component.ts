@@ -9,18 +9,9 @@ import { TasksService } from '../../shared/services/tasks.service';
 })
 export class TasksComponent implements OnInit {
 
-    constructor(public tasksService: TasksService) { console.log('construct tasks'); } // , private dateService: DateService) { }
+    constructor(public tasksService: TasksService) { }
 
     ngOnInit() {
-        console.log('Tasks ngOnInit');
-        this.tasksService.getTasksOfDay();
-        // melyik a jobb signature getTasksOfDay v getDailyStats
-        /*this.tasksService.getDailyStats(
-            this.dateService.selectedDay.year,
-            this.dateService.selectedDay.month,
-            this.dateService.selectedDay.day
-        );
-        */
     }
 
 }

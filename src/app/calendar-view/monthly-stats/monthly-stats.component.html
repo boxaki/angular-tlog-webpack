@@ -12,11 +12,12 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>{{calendarService.requiredMinPerMonth}}</td>
-                        <td>{{calendarService.sumPerMonth}}</td>                        
-                        <td [ngClass]="calendarService.extraMinPerMonth < 0 ? 'negative': 'positive'">{{calendarService.extraMinPerMonth}}</td>
-                    </tr>
-                    
+                        <td>{{calendarService.monthForStats?.requiredMinPerMonth}}</td>
+                        <td>{{calendarService.monthForStats?.sumPerMonth}}</td>                        
+                        <td [ngClass]="calendarService.monthForStats?.extraMinPerMonth < 0 ? 'negative': 'positive'">
+                            {{calendarService.monthForStats?.extraMinPerMonth}}
+                        </td>
+                    </tr>                    
                 </tbody>
             </table>
         </div>

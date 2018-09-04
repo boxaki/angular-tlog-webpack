@@ -7,27 +7,37 @@ import { DateService } from '../../shared/services/date.service';
     styleUrls: ['./pager.component.scss']
 })
 export class PagerComponent implements OnInit {
-    // actualDay: Date;
 
     constructor(private dateService: DateService) { }
 
     ngOnInit() {
-        // this.dateService.currentDate.subscribe(actualDay => this.actualDay = actualDay);
     }
 
-    setNextYear(): void {
+    /**
+     * Sets the pager and dateService to the following year
+     */
+    public setNextYear(): void {
         this.dateService.setNextYear();
     }
+    /**
+     * Sets the pager and dateService to the previous year
+     */
 
-    setPreviousYear(): void {
+    public setPreviousYear(): void {
         this.dateService.setPreviousYear();
     }
 
-    setPreviousMonth(): void {
+    /**
+      * Sets the pager and dateService to the previous month
+      */
+    public setPreviousMonth(): void {
         this.dateService.setPreviousMonth();
     }
 
-    setNextMonth(): void {
+    /**
+      * Sets the pager and dateService to the next month
+      */
+    public setNextMonth(): void {
         this.dateService.setNextMonth();
     }
 

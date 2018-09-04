@@ -1,6 +1,6 @@
 import { WorkDay } from './workDay';
 
-export class WorkMonth {
+export interface WorkMonth {
     days: WorkDay[];
     date: string;
     sumPerMonth: number;

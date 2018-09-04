@@ -1,4 +1,4 @@
-export class StartTaskRB {
+export interface StartTaskRB {
     year: number;
     month: number;
     day: number;

@@ -1,4 +1,4 @@
-export class DeleteTaskRB {
+export interface DeleteTaskRB {
     year: number;
     month: number;
     day: number;

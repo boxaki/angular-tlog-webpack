@@ -8,7 +8,7 @@ import { CalendarService } from '../../shared/services/calendar.service';
 })
 export class MonthlyStatsComponent implements OnInit {
 
-  constructor(public calendarService: CalendarService) { }
+  constructor(protected calendarService: CalendarService) { } // hogy lehet private figyelmezteres nelkul
 
   ngOnInit() {
   }

@@ -8,7 +8,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let week of calendarService.month" my-week [week]="week"></tr>
+                <tr *ngFor="let week of calendarService.currentMonth | async" my-week [week]="week"></tr>
             </tbody>
         </table>
     </div>

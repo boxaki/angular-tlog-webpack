@@ -11,7 +11,7 @@
             </tr>
         </thead>
         <tbody>            
-            <tr *ngFor="let task of tasksService.tasksOfDay" my-task [task]="task"></tr>
+            <tr *ngFor="let task of tasksService.tasks | async" my-task [task]="task"></tr>
             <tr>
                 <td class="text-center" colspan="6"><a data-toggle="modal" data-target="#new_task">+ New Task</a></td>
             </tr>

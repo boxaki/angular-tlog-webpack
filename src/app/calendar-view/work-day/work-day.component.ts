@@ -18,8 +18,10 @@ export class WorkDayComponent implements OnInit {
     ngOnInit() {
     }
 
+    /**
+     * Selects one work day of the calendar for the task-list-view
+     */
     setSelectedDay() {
-        console.log('set selected day' + this.day);
         this.dateService.setSelectedDay(this.day);
     }
 

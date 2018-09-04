@@ -18,13 +18,7 @@ export class EditTaskComponent implements OnInit {
   startTime: string;
   endTime: string;
 
-  selectedTask: Task = {
-    taskId: '0000',
-    startTime: '',
-    endTime: '',
-    comment: '',
-    minPerTask: 0
-  };
+  selectedTask: Task;
 
   constructor(public tasksService: TasksService, private dateService: DateService) { }
 
@@ -34,10 +28,11 @@ export class EditTaskComponent implements OnInit {
     }
   }
 
+  /**
+   * Modifies the selected task's details.
+   */
   modifyTask() {
-    console.log('modify task edit');
 
-    // dateService -> itt letre lehet hozni a modified taskot, es a service-ben mar csak tovabb kell adni
     let modifiedTask: ModifyTaskRB = {
       year: this.dateService.selectedDay.year,
       month: this.dateService.selectedDay.month,
@@ -53,6 +48,9 @@ export class EditTaskComponent implements OnInit {
     this.tasksService.modifyTask(modifiedTask);
   }
 
+  /**
+   * Deletes the selected task.
+   */
   deleteTask() {
     if (confirm('Are you sure to delete task ?')) {
 
@@ -63,7 +61,6 @@ export class EditTaskComponent implements OnInit {
         taskId: this.taskId ? this.taskId : this.tasksService.selectedTask.taskId,
         startTime: this.startTime ? this.startTime : this.tasksService.selectedTask.startTime
       };
-      console.log('task to delete: ' + taskToDelete.startTime);
 
       this.tasksService.deleteTask(taskToDelete);
     }

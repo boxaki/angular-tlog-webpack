@@ -9,30 +9,39 @@ import { CalendarService } from '../../shared/services/calendar.service';
   styleUrls: ['./activate-day.component.scss']
 })
 export class ActivateDayComponent implements OnInit {
-  requiredTime: number;
-  unit = 'min';
+  private requiredTime: number;
+  private unit = 'min';
 
   constructor(private calendarService: CalendarService) { }
 
   ngOnInit() {
   }
 
-  activateDay(form: NgForm) {
+  /**
+   * Sets the right amount of required time and saves it into calendarService
+   *
+   * @param form The html form from template
+   */
+
+  public activateDay(form: NgForm) {
     this.unit = form.controls['unit'].value;
 
-    if (!this.requiredTime || (this.requiredTime.toString().trim().length === 0)) {
-      if (this.unit === 'min') {
-        this.requiredTime = 450;
-      } else if (this.unit === 'hr') {
-        this.requiredTime = 7.5;
-      }
-    }
+    if (this.isEmptyInput()) {
+      this.setDefaultValue();
 
-    if (this.unit === 'hr') {
+    } else if (this.unit === 'hr') {
       this.requiredTime *= 60;
     }
 
     this.calendarService.activateDay(this.requiredTime);
+  }
+
+  private isEmptyInput(): boolean {
+    return !this.requiredTime || (this.requiredTime.toString().trim().length === 0);
+  }
+
+  private setDefaultValue(): void {
+    this.requiredTime = 450;
   }
 
 }

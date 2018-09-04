@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-// import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 import { HttpService } from './http.service';
 import { DateService } from './date.service';
@@ -8,28 +9,43 @@ import { Week } from '../classes/week';
 import { Day } from '../classes/day';
 import { WorkDay } from '../classes/workDay';
 import { WorkMonth } from '../classes/workMonth';
-import { HttpErrorResponse } from '@angular/common/http';
+import { WorkDayRB } from '../classes/workDayRB';
 
 @Injectable()
 export class CalendarService {
-    sumPerMonth: number;
-    requiredMinPerMonth: number;
-    extraMinPerMonth: number;
-    month: Week[] = [];
+    monthForStats: WorkMonth;
 
+    private month: Week[];
+    private monthSource = new BehaviorSubject(this.month);
+    currentMonth = this.monthSource.asObservable();
 
-    actualDay: Date;  // lokalis valtozo
-    // private monthSource = new BehaviorSubject(this.month);
-    // currentMonth = this.monthSource.asObservable();
+    private actualDay: Date;
 
     constructor(private httpService: HttpService, private dateService: DateService) {
         this.dateService.currentDate.subscribe(actualDay => {
             this.actualDay = actualDay;
-            this.getWorkDays();
+            this.updateCalendarAndStats();
         });
     }
 
-    createMonth(workDay: WorkDay[]): void {
+    /**
+     * Creates the calendar and updates the statistics for the selected month
+     */
+    updateCalendarAndStats(): void {
+        this.httpService.getMonthsData(this.actualDay.getFullYear(), this.actualDay.getMonth() + 1)
+            .map((days) => days.sort(this.compareActualDays))
+            .subscribe(workDays => {
+                this.createCalendar(workDays);
+                this.monthSource.next(this.month);
+                this.updateMonthlyStats();
+            });
+    }
+
+    private compareActualDays(day1: WorkDay, day2: WorkDay): number {
+        return parseInt(day2.actualDay.split('-')[2], 10) - parseInt(day1.actualDay.split('-')[2], 10);
+    }
+
+    private createCalendar(workDays: WorkDay[]): void {
         const otherMonth: Day = new Day('other-month', 0, 0, 0);
         this.month = [];
         let selectedYear = this.actualDay.getFullYear();
@@ -40,8 +56,9 @@ export class CalendarService {
         let lengthOfMonth = this.getLengthOfMonth(selectedYear, selectedMonth);
 
         while (dayOfMonth <= lengthOfMonth) {
-            let oneWeek = new Week();
-            oneWeek.days = [];
+            let oneWeek: Week = {
+                days: []
+            };
 
             while (indent > 0) {
                 oneWeek.days.push(otherMonth);
@@ -50,7 +67,7 @@ export class CalendarService {
 
             while (oneWeek.days.length < 7) {
                 if (dayOfMonth <= lengthOfMonth) {
-                    oneWeek.days.push(this.setDay(selectedYear, selectedMonth + 1, dayOfMonth, workDay));
+                    oneWeek.days.push(this.setDay(selectedYear, selectedMonth + 1, dayOfMonth, workDays));
                     dayOfMonth++;
                 } else {
                     oneWeek.days.push(otherMonth);
@@ -61,15 +78,17 @@ export class CalendarService {
         }
     }
 
-    setDay(year: number, month: number, day: number, workDays: WorkDay[]): Day {
+    private setDay(year: number, month: number, day: number, workDays: WorkDay[]): Day {
         let date = year + '-' + (month > 9 ? month : '0' + month) + '-' + (day > 9 ? day : '0' + day);
-        let newDay: Day;
 
-        for (let workDay of workDays) {
+        if (workDays.length > 0) {
+            let selectedDay = workDays[workDays.length - 1];
 
-            if (workDay.actualDay === date) {
-                newDay = new Day('workday', year, month, day);
-                newDay.extraMinutes = workDay.sumPerDay - workDay.requiredMinPerDay;
+            if (selectedDay.actualDay === date) {
+                let newDay = new Day('workday', year, month, day);
+                newDay.extraMinutes = selectedDay.sumPerDay - selectedDay.requiredMinPerDay; // setExtraMinutes?
+                workDays.pop();
+
                 return newDay;
             }
         }
@@ -77,7 +96,7 @@ export class CalendarService {
 
     }
 
-    getIndent(year: number, month: number): number {
+    private getIndent(year: number, month: number): number {
         let date = new Date(year, month, 1);
         let indent = date.getDay();
         if (indent === 0) {
@@ -88,61 +107,49 @@ export class CalendarService {
         return indent;
     }
 
-    getLengthOfMonth(year: number, month: number): number {
+    private getLengthOfMonth(year: number, month: number): number {
         return new Date(year, month + 1, 0).getDate();
     }
 
-    // nem jo nev, valami kifejezobbet talalni ki
-    getWorkDays(): void {
-        this.httpService.getMonthsData(this.actualDay.getFullYear(), this.actualDay.getMonth()).subscribe(workDays => {
-            this.createMonth(workDays);
-            // this.monthSource.next(this.month);
-            this.getMonthlyStats();
-        });
+    private updateMonthlyStats(): void {
+        this.httpService.getMonthlyStats(this.actualDay.getFullYear(), this.actualDay.getMonth() + 1)
+            .subscribe(workMonth => {
+                this.monthForStats = workMonth;
+            });
     }
 
-    getMonthlyStats(): void {
-        this.httpService.getMonthlyStats(this.actualDay.getFullYear(), this.actualDay.getMonth()).subscribe(workMonth => {
-            this.saveMonthlyStats(workMonth[0]);
-        });
-    }
-
-    // hogy lehetne kihagyni, es sporolni 3 fieldet
-    saveMonthlyStats(workMonth: WorkMonth): void {
-        this.sumPerMonth = workMonth.sumPerMonth;
-        this.requiredMinPerMonth = workMonth.requiredMinPerMonth;
-        this.extraMinPerMonth = workMonth.extraMinPerMonth;
-    }
-
+    /**
+     * Sets the required minutes for a workday. Asks for confirmation if the day is on the weekend.
+     * @param requiredMinPerDay required work minutes for the day
+     */
     activateDay(requiredMinPerDay: number): void {
-        console.log('calendar service: ' + requiredMinPerDay);
-        this.httpService
-            .activateDay(this.dateService.selectedDay.year,
-                this.dateService.selectedDay.month,
-                this.dateService.selectedDay.day,
-                requiredMinPerDay)
-            .subscribe(
-                () => this.getWorkDays(),
-                error => this.handleError(error, requiredMinPerDay),
 
-        );
+        let newDay: WorkDayRB = {
+            year: this.dateService.selectedDay.year,
+            month: this.dateService.selectedDay.month,
+            day: this.dateService.selectedDay.day,
+            requiredMinPerDay: requiredMinPerDay
+        };
+
+        this.httpService
+            .activateDay(newDay)
+            .subscribe(
+                () => this.updateCalendarAndStats(),
+                error => this.handleError(error, newDay)
+            );
     }
 
-    private handleError(error: HttpErrorResponse, requiredMinPerDay: number) {
+    private handleError(error: HttpErrorResponse, newDay: WorkDayRB) {
         if (error.status === 302) {
             if (confirm('Do you want to activate weekend day?')) {
-                this.activateWeekend(requiredMinPerDay);
+                this.activateWeekend(newDay);
             }
         }
     }
 
-    activateWeekend(requiredMinPerDay: number): void {
-
-        this.httpService.activateWeekendDay(this.dateService.selectedDay.year,
-            this.dateService.selectedDay.month,
-            this.dateService.selectedDay.day,
-            requiredMinPerDay)
-            .subscribe(() => this.getWorkDays());
+    private activateWeekend(weekendDay: WorkDayRB): void {
+        this.httpService.activateWeekendDay(weekendDay)
+            .subscribe(() => this.updateCalendarAndStats());
     }
 
 }

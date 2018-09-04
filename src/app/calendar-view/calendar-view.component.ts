@@ -9,18 +9,19 @@ import { TasksService } from '../shared/services/tasks.service';
     styleUrls: ['./calendar-view.component.scss']
 })
 
-
 export class CalendarViewComponent implements OnInit {
     days: string[] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-    constructor(public calendarService: CalendarService, private tasksService: TasksService) {
+    constructor(private calendarService: CalendarService, private tasksService: TasksService) {
     }
 
+    /**
+     * Updates the view if anything changed in the task-list-view
+     */
     ngOnInit() {
         if (this.tasksService.tasksChanged) {
             this.tasksService.setTasksNotChanged();
-            this.calendarService.getWorkDays();
+            this.calendarService.updateCalendarAndStats();
         }
-        console.log('calendar view comp');
     }
 }

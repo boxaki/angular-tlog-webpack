@@ -1,4 +1,4 @@
-export class ModifyTaskRB {
+export interface ModifyTaskRB {
     year: number;
     month: number;
     day: number;

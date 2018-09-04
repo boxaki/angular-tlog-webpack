@@ -16,37 +16,35 @@ export class NewTaskComponent implements OnInit {
   comment: string;
   startTime: string;
   endTime: string;
-  // selectedYear: number;
-
+  defaultValue = '';
 
   constructor(private tasksService: TasksService, private dateService: DateService) { }
 
   ngOnInit() {
-    // this.selectedYear = this.dateService.selectedDay.year;
-    console.log('new-task on init');
   }
 
+  /**
+   * Adds a new task or starts it if the end time is empty.
+   */
   addNewTask(): void {
 
-    console.log('end time: ' + this.endTime);
-    let startTaskRB: StartTaskRB = {
+    let baseData = {
       year: this.dateService.selectedDay.year,
       month: this.dateService.selectedDay.month,
       day: this.dateService.selectedDay.day,
       taskId: this.taskId,
-      comment: this.comment,
       startTime: this.startTime
+    };
+
+    let startTaskRB: StartTaskRB = {
+      ...baseData,
+      comment: this.comment,
     };
 
     if (this.endTime.trim().length !== 0) {
 
-      // finishTaskRB = startTaskRB ? v vmi hasonlo rovidites
       let finishTaskRB: FinishTaskRB = {
-        year: startTaskRB.year,
-        month: startTaskRB.month,
-        day: startTaskRB.day,
-        taskId: startTaskRB.taskId,
-        startTime: startTaskRB.startTime,
+        ...baseData,
         endTime: this.endTime
       };
 

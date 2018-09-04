@@ -2,25 +2,24 @@
     <div class="btn-group">
         <button type="button" class="btn btn-primary btn-lg" (click)="setPreviousYear()">&lt;&lt;</button>
         <button type="button" class="btn btn-primary btn-lg" (click)="setPreviousMonth()">&lt;</button>
+        <button type="button" class="btn btn-primary btn-lg">
+            {{dateService.currentDate | async | date :'yyyy'}}
+        </button>
         <div class="btn-group">
             <button type="button" class="btn btn-primary btn-lg dropdown-toggle" data-toggle="dropdown">
-                <span id="year">{{dateService.currentDate | async | date :'yyyy'}}</span><span class="caret"></span>
+                <span id="month">{{dateService.currentDate | async | date:'MM'}}</span>
+                <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">
-                <li><a href="#">2017</a></li>
-                <li><a href="#">2016</a></li>
-            </ul>
-        </div>
-        <div class="btn-group">
-            <button type="button" class="btn btn-primary btn-lg dropdown-toggle" data-toggle="dropdown">
-                <span id="month">{{dateService.currentDate | async | date:'MM'}}</span><span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" role="menu">
-                <li><a href="#">02</a></li>
-                <li><a href="#">03</a></li>
+                <li>
+                    <a href="#">02</a>
+                </li>
+                <li>
+                    <a href="#">03</a>
+                </li>
             </ul>
         </div>
         <button type="button" class="btn btn-primary btn-lg" (click)="setNextMonth()">&gt;</button>
-        <button type="button" class="btn btn-primary btn-lg" (click)="setNextYear()">&gt;&gt;</button> 
+        <button type="button" class="btn btn-primary btn-lg" (click)="setNextYear()">&gt;&gt;</button>
     </div>
-</div>   
+</div>

@@ -17,6 +17,9 @@ export class SimpleDayComponent implements OnInit {
     ngOnInit() {
     }
 
+    /**
+     * Selects one day of the calendar for activate-day component
+     */
     setSelectedDay(): void {
         this.dateService.setSelectedDay(this.day);
     }

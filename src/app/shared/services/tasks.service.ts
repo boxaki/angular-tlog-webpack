@@ -10,82 +10,111 @@ import { FinishTaskRB } from '../classes/finishTaskRB';
 import { ModifyTaskRB } from '../classes/modifyTaskRB';
 import { DeleteTaskRB } from '../classes/deleteTaskRB';
 
+import { BehaviorSubject } from 'rxjs';
+
 
 @Injectable()
 export class TasksService {
-    tasksOfDay: Task[];
+    private _tasks: BehaviorSubject<Task[]> = <BehaviorSubject<Task[]>>new BehaviorSubject([]);
+    public readonly tasks = this._tasks.asObservable();
+
     selectedTask: Task;
-    workDayForStats: WorkDay; // saját service-t csinalni neki ?
+    workDayForStats: WorkDay;
     tasksChanged = false;
 
-    constructor(private httpService: HttpService, private dateService: DateService) { // dateService-t atrakni ? -> nem
-        // this.getTasksOfDay();
-        console.log('construct task service' + dateService.selectedDay.year + ' ' +
-            dateService.selectedDay.month + ' ' + dateService.selectedDay.day
-        );
-    }
+    constructor(private httpService: HttpService, private dateService: DateService) { }
 
-    getTasksOfDay(): void {
+    /**
+     * Loads the task and stats for task-list-view. Sorts the tasks by start time.
+     */
+    loadTasksAndStatsOfDay(): void {
         this.httpService
-            .getTasksOfDay(this.dateService.selectedDay.year, this.dateService.selectedDay.month - 1, this.dateService.selectedDay.day)
+            .getTasksOfDay(this.dateService.selectedDay.year, this.dateService.selectedDay.month, this.dateService.selectedDay.day)
+            .map((tasks) => tasks.sort(this.compareTimes))
             .subscribe(tasksOfDay => {
-                this.tasksOfDay = tasksOfDay;
+                this._tasks.next(tasksOfDay);
                 this.getDailyStats(this.dateService.selectedDay.year, this.dateService.selectedDay.month, this.dateService.selectedDay.day);
             });
     }
 
-    addNewTask(newTask: StartTaskRB, finishTaskRB: FinishTaskRB): void {
-
-        this.httpService.startNewTask(newTask).flatMap(() =>
-            this.httpService.finishTask(finishTaskRB)).subscribe(() => {
-                this.tasksChanged = true;
-                this.getTasksOfDay();
-            });
-        /*
-        a flatMap nelkul ez az utsitas megbolonditja neha a backendet/ servert
-        2* el lehet kuldeni ua-t a taskot, anelkul, hogy exc lenne
-        az sql neha 500-at dob -> dupla primarykey -> miert ? -> hogyan lehet vele visszaelni,
-        hogyan lehet kivedeni ?
-        this.httpService.finishTask(finishTaskRB).subscribe(() => {
-            this.getTasksOfDay();
-            console.log('finished');
+    private compareTimes(a: Task, b: Task): number {
+        if (parseInt(a.startTime.split(':')[0], 10) - parseInt(b.startTime.split(':')[0], 10) === 0) {
+            return parseInt(a.startTime.split(':')[1], 10) - parseInt(b.startTime.split(':')[1], 10);
+        } else {
+            return parseInt(a.startTime.split(':')[0], 10) - parseInt(b.startTime.split(':')[0], 10);
         }
-        );
-        */
+
     }
 
+    /**
+     * Add new task and refreshes the view.
+     * @param newTask
+     * @param finishNewTask
+     */
+    addNewTask(newTask: StartTaskRB, finishNewTask: FinishTaskRB): void {
+        this.httpService.startNewTask(newTask).flatMap(() =>
+            this.httpService.finishTask(finishNewTask)).subscribe(() => {
+                this.tasksChanged = true;
+                this.loadTasksAndStatsOfDay();
+            });
+    }
+
+    /**
+     * Selects a task for modification/deletion.
+     * @param task
+     */
     setSelectedTask(task: Task): void {
         this.selectedTask = task;
-        console.log('tasksService setSelectedTask' + this.selectedTask);
     }
 
+    /**
+     * Modifies a task and refreshes the view.
+     * @param modifiedTask
+     */
     modifyTask(modifiedTask: ModifyTaskRB): void {
-        console.log('tasksService modifyTask');
-
-        this.httpService.modifyTask(modifiedTask).subscribe(() => {
-            this.tasksChanged = true;
-            this.getTasksOfDay();
-        });
+        this.httpService.modifyTask(modifiedTask)
+            .subscribe(() => {
+                this.tasksChanged = true;
+                this.loadTasksAndStatsOfDay();
+            });
     }
 
+    /**
+     * Statrs a new task without finishing it and refreshes the view.
+     * @param newTask
+     */
     startNewTask(newTask: StartTaskRB): void {
         this.httpService.startNewTask(newTask).subscribe(() => {
             this.tasksChanged = true;
-            this.getTasksOfDay();
+            this.loadTasksAndStatsOfDay();
         });
     }
 
+    /**
+     * Deletes a task and refreshes the view.
+     * @param taskToDelete
+     */
     deleteTask(taskToDelete: DeleteTaskRB): void {
         this.httpService.deleteTask(taskToDelete).subscribe(() => {
             this.tasksChanged = true;
-            this.getTasksOfDay();
+            this.loadTasksAndStatsOfDay();
         });
     }
 
+    /**
+     * Gets the statistics for a workday.
+     * @param year
+     * @param month
+     * @param day
+     */
     getDailyStats(year: number, month: number, day: number): void {
-        this.httpService.getDailyStats(year, month, day).subscribe(workDay => this.workDayForStats = workDay[0]);
+        this.httpService.getDailyStats(year, month, day)
+            .subscribe(workDay => this.workDayForStats = workDay);
     }
 
+    /**
+     * Sets the task to unchanged (default state).
+     */
     setTasksNotChanged() {
         this.tasksChanged = false;
     }
