@@ -7,15 +7,16 @@
                 <th>Start time</th>
                 <th>End time</th>
                 <th>Length</th>
-                <th>Edit</th>                        
+                <th>Edit</th>
             </tr>
         </thead>
-        <tbody>            
+        <tbody>
             <tr *ngFor="let task of tasksService.tasks | async" my-task [task]="task"></tr>
             <tr>
-                <td class="text-center" colspan="6"><a data-toggle="modal" data-target="#new_task">+ New Task</a></td>
+                <td class="text-center" colspan="6">
+                    <a data-toggle="modal" data-target="#new_task">+ New Task</a>
+                </td>
             </tr>
-
         </tbody>
-    </table>                
+    </table>
 </div>

@@ -3,7 +3,7 @@
         <button type="button" class="btn btn-primary btn-lg" (click)="setPreviousYear()">&lt;&lt;</button>
         <button type="button" class="btn btn-primary btn-lg" (click)="setPreviousMonth()">&lt;</button>
         <button type="button" class="btn btn-primary btn-lg">
-            {{dateService.currentDate | async | date :'yyyy'}}
+            <span id="year">{{dateService.currentDate | async | date :'yyyy'}}</span>
         </button>
         <div class="btn-group">
             <button type="button" class="btn btn-primary btn-lg dropdown-toggle" data-toggle="dropdown">

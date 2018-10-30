@@ -1,8 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { DateService } from '../../shared/services/date.service';
-// import { TasksService } from '../../shared/services/tasks.service';
-
 import { Day } from '../../shared/classes/day';
 
 @Component({

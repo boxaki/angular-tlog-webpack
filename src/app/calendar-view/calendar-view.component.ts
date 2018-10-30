@@ -12,7 +12,7 @@ import { TasksService } from '../shared/services/tasks.service';
 export class CalendarViewComponent implements OnInit {
     days: string[] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-    constructor(private calendarService: CalendarService, private tasksService: TasksService) {
+    constructor(public calendarService: CalendarService, public tasksService: TasksService) {
     }
 
     /**

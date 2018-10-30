@@ -19,7 +19,7 @@ export class TasksService {
     public readonly tasks = this._tasks.asObservable();
 
     selectedTask: Task;
-    workDayForStats: WorkDay;
+    workDayForStats: WorkDay; // megváltoztatni Observable-re?
     tasksChanged = false;
 
     constructor(private httpService: HttpService, private dateService: DateService) { }
@@ -32,7 +32,7 @@ export class TasksService {
             .getTasksOfDay(this.dateService.selectedDay.year, this.dateService.selectedDay.month, this.dateService.selectedDay.day)
             .map((tasks) => tasks.sort(this.compareTimes))
             .subscribe(tasksOfDay => {
-                this._tasks.next(tasksOfDay);
+                this._tasks.next(tasksOfDay);  // kell e behaviorSubject v observable tasks = taskOfDay v vmi hasonlo --> kiprobalni
                 this.getDailyStats(this.dateService.selectedDay.year, this.dateService.selectedDay.month, this.dateService.selectedDay.day);
             });
     }
@@ -46,6 +46,7 @@ export class TasksService {
 
     }
 
+    // Add finished task
     /**
      * Add new task and refreshes the view.
      * @param newTask

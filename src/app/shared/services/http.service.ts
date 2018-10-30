@@ -27,14 +27,14 @@ export class HttpService {
      * @param year
      * @param month 1-12
      */
-    public getMonthsData(year: number, month: number): Observable<WorkDay[]> {
+    public getMonthsData(year: number, month: number): Observable<WorkDay[]> { // át kéne nevezni, get workdays v vmi hasonlo
         const url = `${this.backendUrl}/workmonths/${year}/${month}`;
 
         return this.http.get<WorkDay[]>(url);
     }
 
     /**
-     * Gets the selected month's details with the calculated statistics.
+     * Gets the selected month's details with the backend calculated statistics.
      * @param year
      * @param month 1-12
      */
@@ -43,7 +43,7 @@ export class HttpService {
         const url = `${this.backendUrl}/workmonths`;
 
         return this.http.get<WorkMonth[]>(url)
-            .map(days => days.filter(day => day.date === date))
+            .map(days => days.filter(day => day.date === date)) // find ?
             .map(workMonth => workMonth[0]);
     }
 
@@ -53,7 +53,7 @@ export class HttpService {
      * @param month 1-12
      * @param day
      */
-    getDailyStats(year: number, month: number, day: number): Observable<WorkDay> {
+    getDailyStats(year: number, month: number, day: number): Observable<WorkDay> { // v létrehozni dailystats interface-t
         let date = year + '-' + (month < 10 ? '0' + month : month) + '-' + (day < 10 ? '0' + day : day);
 
         return this.getMonthsData(year, month)
@@ -97,7 +97,7 @@ export class HttpService {
      * Start a new task.
      * @param newTask
      */
-    startNewTask(newTask: StartTaskRB): Observable<Task> {
+    startNewTask(newTask: StartTaskRB): Observable<Task> { // nev -> startTask?
         const url = `${this.backendUrl}/workmonths/workdays/tasks/start`;
 
         return this.http.post<Task>(url, newTask, httpOptions);

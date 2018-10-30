@@ -13,13 +13,13 @@ import { WorkDayRB } from '../classes/workDayRB';
 
 @Injectable()
 export class CalendarService {
-    monthForStats: WorkMonth;
+    monthForStats: WorkMonth; // kell e neki saját service single resp principle?
 
     private month: Week[];
     private monthSource = new BehaviorSubject(this.month);
     currentMonth = this.monthSource.asObservable();
 
-    private actualDay: Date;
+    private actualDay: Date = new Date();
 
     constructor(private httpService: HttpService, private dateService: DateService) {
         this.dateService.currentDate.subscribe(actualDay => {
@@ -93,7 +93,6 @@ export class CalendarService {
             }
         }
         return new Day('simple-day', year, month, day);
-
     }
 
     private getIndent(year: number, month: number): number {

@@ -6,17 +6,23 @@ import { DayDate } from '../classes/dayDate';
 @Injectable()
 export class DateService {
 
-    actualDate: Date = new Date();
+    private actualDate: Date = new Date();
     private dateSource = new BehaviorSubject(this.actualDate);
-    readonly currentDate = this.dateSource.asObservable();
+    // readonly currentDate = this.dateSource.asObservable();
 
-    selectedDay: DayDate = {
+    get currentDate() {
+        return this.dateSource.asObservable();
+    }
+
+    selectedDay = {  // Date ?
         year: this.actualDate.getFullYear(),
         month: this.actualDate.getMonth() + 1,
         day: this.actualDate.getDate()
     };
 
-    constructor() { }
+    constructor() {
+        this.actualDate.setDate(1);
+     }
 
     /**
      * Sets the date to display to next month
