@@ -3,7 +3,7 @@
         <div class="navbar-header">
             <span class="navbar-brand">Timelogger</span>
         </div>
-        <ul class="nav navbar-nav">
+        <ul class="nav navbar-nav" *ngIf="authTokenService.isLoggedIn">
             <li [routerLinkActive]="['active']">
                 <a routerLink="/calendar" data-toggle="tooltip" title="Calendar view" (click)="onSelect('calendar')">
                     <span class="glyphicon glyphicon-calendar"></span>
@@ -12,6 +12,13 @@
             <li [routerLinkActive]="['active']">
                 <a routerLink="/task-list" data-toggle="tooltip" title="List view" (click)="onSelect('task-list')">
                     <span class="glyphicon glyphicon-list"></span>
+                </a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right" *ngIf="authTokenService.isLoggedIn">
+            <li>
+                <a routerLink="/login" (click)="logout()">
+                    <span class="glyphicon glyphicon-log-out"> Logout</span>
                 </a>
             </li>
         </ul>

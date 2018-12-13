@@ -19,7 +19,7 @@ export class CalendarViewComponent implements OnInit {
      * Updates the view if anything changed in the task-list-view
      */
     ngOnInit() {
-        if (this.tasksService.tasksChanged) {
+        if (this.tasksService.tasksChanged) { // meg lehet e oldani routerrel akkor nem kene a taskservice
             this.tasksService.setTasksNotChanged();
             this.calendarService.updateCalendarAndStats();
         }

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../shared/services/auth.service';
+import { AuthTokenService } from '../shared/services/authToken.service';
 
 @Component({
     selector: 'my-navigation-bar',
@@ -8,13 +10,17 @@ import { Component, OnInit } from '@angular/core';
 export class NavigationBarComponent implements OnInit {
     selectedRoute = 'calendar';
 
-    constructor() {}
+    constructor(public authTokenService: AuthTokenService, private authService: AuthService) { }
 
     ngOnInit() {
     }
 
     onSelect(route: string): void {
         this.selectedRoute = route;
+    }
+
+    logout() {
+        this.authService.logout();
     }
 
 }

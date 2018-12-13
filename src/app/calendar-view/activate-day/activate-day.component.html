@@ -11,7 +11,7 @@
                 <form class="form-inline" #timeForm="ngForm">
                     <div class="form-group">
                         <label for="time">Required time:</label>
-                        <input [(ngModel)]="requiredTime" type="time" id="time" name="time" placeholder="default: 450 min" />
+                        <input [(ngModel)]="requiredTime" type="text" id="time" name="time" placeholder="default: 450 min" />
                     </div>
                     <label class="radio-inline">
                         <input type="radio" value="min" name="unit" [ngModel]="unit"> min

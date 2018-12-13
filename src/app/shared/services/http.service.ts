@@ -1,20 +1,18 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
 import { Task } from '../classes/task';
 import { WorkDay } from '../classes/workDay';
 import { WorkMonth } from '../classes/workMonth';
+
 import { WorkDayRB } from '../classes/workDayRB';
 import { StartTaskRB } from '../classes/startTaskRB';
 import { ModifyTaskRB } from '../classes/modifyTaskRB';
 import { FinishTaskRB } from '../classes/finishTaskRB';
 import { DeleteTaskRB } from '../classes/deleteTaskRB';
-
-const httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
+import { UserRB } from '../classes/userRB';
 
 @Injectable()
 export class HttpService {
@@ -30,7 +28,7 @@ export class HttpService {
     public getMonthsData(year: number, month: number): Observable<WorkDay[]> { // át kéne nevezni, get workdays v vmi hasonlo
         const url = `${this.backendUrl}/workmonths/${year}/${month}`;
 
-        return this.http.get<WorkDay[]>(url);
+        return this.http.get<WorkDay[]>(url, { headers: this.getHeaders() });
     }
 
     /**
@@ -42,7 +40,7 @@ export class HttpService {
         let date = year + '-' + (month < 10 ? '0' + month : month);
         const url = `${this.backendUrl}/workmonths`;
 
-        return this.http.get<WorkMonth[]>(url)
+        return this.http.get<WorkMonth[]>(url, { headers: this.getHeaders() })
             .map(days => days.filter(day => day.date === date)) // find ?
             .map(workMonth => workMonth[0]);
     }
@@ -68,7 +66,7 @@ export class HttpService {
     activateDay(newDay: WorkDayRB): Observable<WorkDay> {
         const url = `${this.backendUrl}/workmonths/workdays`;
 
-        return this.http.post<WorkDay>(url, newDay, httpOptions);
+        return this.http.post<WorkDay>(url, newDay, { headers: this.getHeaders() });
     }
 
     /**
@@ -78,7 +76,7 @@ export class HttpService {
     activateWeekendDay(weekendDay: WorkDayRB) {
         const url = `${this.backendUrl}/workmonths/weekends`;
 
-        return this.http.post<WorkDay>(url, weekendDay, httpOptions);
+        return this.http.post<WorkDay>(url, weekendDay, { headers: this.getHeaders() });
     }
 
     /**
@@ -90,7 +88,7 @@ export class HttpService {
     getTasksOfDay(year: number, month: number, day: number): Observable<Task[]> {
         const url = `${this.backendUrl}/workmonths/${year}/${month}/${day}`;
 
-        return this.http.get<Task[]>(url);
+        return this.http.get<Task[]>(url, { headers: this.getHeaders() });
     }
 
     /**
@@ -100,7 +98,7 @@ export class HttpService {
     startNewTask(newTask: StartTaskRB): Observable<Task> { // nev -> startTask?
         const url = `${this.backendUrl}/workmonths/workdays/tasks/start`;
 
-        return this.http.post<Task>(url, newTask, httpOptions);
+        return this.http.post<Task>(url, newTask, { headers: this.getHeaders() });
     }
 
     /**
@@ -110,7 +108,7 @@ export class HttpService {
     finishTask(finishedTask: FinishTaskRB): Observable<Task> {
         const url = `${this.backendUrl}/workmonths/workdays/tasks/finish`;
 
-        return this.http.put<Task>(url, finishedTask, httpOptions);
+        return this.http.put<Task>(url, finishedTask, { headers: this.getHeaders() });
     }
 
     /**
@@ -120,7 +118,7 @@ export class HttpService {
     modifyTask(modifiedTask: ModifyTaskRB): Observable<Task> {
         const url = `${this.backendUrl}/workmonths/workdays/tasks/modify`;
 
-        return this.http.put<Task>(url, modifiedTask, httpOptions);
+        return this.http.put<Task>(url, modifiedTask, { headers: this.getHeaders() });
     }
 
     /**
@@ -130,6 +128,42 @@ export class HttpService {
     deleteTask(taskToDelete: DeleteTaskRB): Observable<Task> {
         const url = `${this.backendUrl}/workmonths/workdays/tasks/delete`;
 
-        return this.http.put<Task>(url, taskToDelete, httpOptions);
+        return this.http.put<Task>(url, taskToDelete, { headers: this.getHeaders() });
     }
+
+    login(user: UserRB): Observable<HttpResponse<Response>> {
+        const url = `${this.backendUrl}/login`;
+
+        let headers = new HttpHeaders();
+        headers = headers.append("Content-Type", "application/json");
+
+        return this.http.post<any>(url, user, { headers: headers, observe: 'response' });
+    }
+
+    register(user: UserRB): Observable<HttpResponse<Response>> {
+        const url = `${this.backendUrl}/register`;
+
+        return this.http.post<any>(url, user, { headers: this.getHeaders(), observe: 'response' });
+    }
+
+    refresh(): Observable<HttpResponse<Response>> {
+        const url = `${this.backendUrl}/refresh`;
+
+        return this.http.get<any>(url, { headers: this.getHeaders(), observe: 'response' });
+    }
+
+    private getHeaders() { // httpintercetor kezelje az auth headert        
+
+        let headers = new HttpHeaders();
+        headers = headers.append('Content-Type', 'application/json');
+
+        let jwt = sessionStorage.getItem('jwt');
+
+        if (jwt) {
+            headers = headers.append('Authorization', jwt);
+        }
+
+        return headers;
+    }
+
 }

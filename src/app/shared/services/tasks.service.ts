@@ -12,7 +12,6 @@ import { DeleteTaskRB } from '../classes/deleteTaskRB';
 
 import { BehaviorSubject } from 'rxjs';
 
-
 @Injectable()
 export class TasksService {
     private _tasks: BehaviorSubject<Task[]> = <BehaviorSubject<Task[]>>new BehaviorSubject([]);
@@ -28,6 +27,7 @@ export class TasksService {
      * Loads the task and stats for task-list-view. Sorts the tasks by start time.
      */
     loadTasksAndStatsOfDay(): void {
+        this.tasksChanged = true;
         this.httpService
             .getTasksOfDay(this.dateService.selectedDay.year, this.dateService.selectedDay.month, this.dateService.selectedDay.day)
             .map((tasks) => tasks.sort(this.compareTimes))
@@ -46,13 +46,14 @@ export class TasksService {
 
     }
 
-    // Add finished task
+    // Add finishedTask/ addTask
     /**
      * Add new task and refreshes the view.
      * @param newTask
      * @param finishNewTask
      */
     addNewTask(newTask: StartTaskRB, finishNewTask: FinishTaskRB): void {
+
         this.httpService.startNewTask(newTask).flatMap(() =>
             this.httpService.finishTask(finishNewTask)).subscribe(() => {
                 this.tasksChanged = true;
@@ -108,7 +109,7 @@ export class TasksService {
      * @param month
      * @param day
      */
-    getDailyStats(year: number, month: number, day: number): void {
+    getDailyStats(year: number, month: number, day: number): void { // this.tasksChanged ide , mashonnet ki
         this.httpService.getDailyStats(year, month, day)
             .subscribe(workDay => this.workDayForStats = workDay);
     }

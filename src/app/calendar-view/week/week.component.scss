@@ -1,8 +1,11 @@
 td{
-    //background-color: mediumaquamarine;
+    margin: 0px;
+    padding: 0px;
+    // background-color: mediumaquamarine;
     background-color: antiquewhite;
     color: black;
     height: 65px;
+    // height: 100%;    
     width: 13%;
     &:not(.other-month):hover {
         background-color: bisque;

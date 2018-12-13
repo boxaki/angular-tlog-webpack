@@ -13,7 +13,7 @@ import { WorkDayRB } from '../classes/workDayRB';
 
 @Injectable()
 export class CalendarService {
-    monthForStats: WorkMonth; // kell e neki saját service single resp principle?
+    monthForStats: WorkMonth; // kell e neki saját service (srp)?
 
     private month: Week[];
     private monthSource = new BehaviorSubject(this.month);

@@ -1,6 +1,6 @@
 import { NgModule, ApplicationRef } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
@@ -9,6 +9,7 @@ import { routing } from './app.routing';
 
 import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
 
+import { LoginComponent } from './login/login.component';
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
 import { CalendarViewComponent } from './calendar-view/calendar-view.component';
 import { TaskListViewComponent } from './task-list-view/task-list-view.component';
@@ -28,6 +29,10 @@ import { DateService } from './shared/services/date.service';
 import { HttpService } from './shared/services/http.service';
 import { CalendarService } from './shared/services/calendar.service';
 import { TasksService } from './shared/services/tasks.service';
+import { AuthService } from './shared/services/auth.service';
+import { AuthGuard } from './shared/services/auth.guard';
+import { HttpErrorInterceptor } from './shared/services/httpError.interceptor';
+import { AuthTokenService } from './shared/services/authToken.service';
 
 @NgModule({
   imports: [
@@ -38,6 +43,7 @@ import { TasksService } from './shared/services/tasks.service';
   ],
   declarations: [
     AppComponent,
+    LoginComponent,
     NavigationBarComponent,
     CalendarViewComponent,
     TaskListViewComponent,
@@ -54,11 +60,19 @@ import { TasksService } from './shared/services/tasks.service';
     NewTaskComponent
   ],
   providers: [
+    AuthService,
+    AuthGuard,
     ApiService,
     DateService,
     HttpService,
     CalendarService,
-    TasksService
+    TasksService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
+      multi: true
+    },
+    AuthTokenService
   ],
   bootstrap: [AppComponent]
 })
