@@ -135,7 +135,7 @@ export class HttpService {
         const url = `${this.backendUrl}/login`;
 
         let headers = new HttpHeaders();
-        headers = headers.append("Content-Type", "application/json");
+        headers = headers.append('Content-Type', 'application/json');
 
         return this.http.post<any>(url, user, { headers: headers, observe: 'response' });
     }
@@ -152,7 +152,7 @@ export class HttpService {
         return this.http.get<any>(url, { headers: this.getHeaders(), observe: 'response' });
     }
 
-    private getHeaders() { // httpintercetor kezelje az auth headert        
+    private getHeaders() { // httpintercetor kezelje az auth headert
 
         let headers = new HttpHeaders();
         headers = headers.append('Content-Type', 'application/json');

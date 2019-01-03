@@ -11,7 +11,7 @@ const refreshIntervalInSec = 4 * 60;
 
 @Injectable()
 export class AuthService {
-    redirectUrl: string = '/';
+    redirectUrl = '/';
     timer;
 
     constructor(
@@ -62,7 +62,7 @@ export class AuthService {
     public register(user: UserRB) {
         this.httpService.register(user).subscribe(
             () => {
-                if (confirm("Successful registration you can log in!")) { }
+                if (confirm('Successful registration you can log in!')) { }
             },
             error => {
                 this.handleError(error);
@@ -72,11 +72,11 @@ export class AuthService {
 
     private handleError(error: HttpErrorResponse) {
         if (error.status === 409) {
-            if (confirm("Username is taken!")) { }
+            if (confirm('Username is taken!')) { }
         } else if (error.status === 403) {
-            if (confirm("Authentication failure!")) { }
+            if (confirm('Authentication failure!')) { }
         } else if (error.status === 401) {
-            if (confirm("You are not logged in. Please log in to continue!")) { }
+            if (confirm('You are not logged in. Please log in to continue!')) { }
             this.authTokenService.isLoggedIn = false;
         }
     }

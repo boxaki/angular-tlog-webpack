@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class AuthTokenService {
 
-    constructor() { };
-
     isLoggedIn = false; // beavior subject?; private
+
+    constructor() { };
 
     setJwt(jwt: string) {
         sessionStorage.setItem('jwt', jwt);

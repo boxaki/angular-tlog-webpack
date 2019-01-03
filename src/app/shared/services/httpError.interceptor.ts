@@ -30,6 +30,6 @@ export class HttpErrorInterceptor implements HttpInterceptor {
                     }
                 }
             )
-        )
+        );
     }
 }

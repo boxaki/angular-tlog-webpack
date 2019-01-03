@@ -2,19 +2,19 @@
     <table class="table table-bordered">
         <thead class="text-center">
             <tr>
-                <th>Task Id</th>
-                <th>Comment</th>
-                <th>Start time</th>
-                <th>End time</th>
-                <th>Length</th>
-                <th>Edit</th>
+                <th i18n="Task details taskId">Task Id</th>
+                <th i18n="Task details comment">Comment</th>
+                <th i18n="Task details start time">Start time</th>
+                <th i18n="Task details end time">End time</th>
+                <th i18n="Task details length">Length</th>
+                <th i18n="Task details edit">Edit</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let task of tasksService.tasks | async" my-task [task]="task"></tr>
             <tr>
                 <td class="text-center" colspan="6">
-                    <a data-toggle="modal" data-target="#new_task">+ New Task</a>
+                    <a i18n="Link new task" data-toggle="modal" data-target="#new_task">+ New Task</a>
                 </td>
             </tr>
         </tbody>

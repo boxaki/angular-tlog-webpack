@@ -5,19 +5,19 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Required minutes</th>
-                        <th>Sum of month</th>
-                        <th>Extra minutes</th>
+                        <th i18n="Stats required minutes">Required minutes</th>
+                        <th i18n="Stats sum of month">Sum of month</th>
+                        <th i18n="Stats extra minutes">Extra minutes</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>{{calendarService.monthForStats?.requiredMinPerMonth}}</td>
-                        <td>{{calendarService.monthForStats?.sumPerMonth}}</td>                        
+                        <td>{{calendarService.monthForStats?.sumPerMonth}}</td>
                         <td [ngClass]="calendarService.monthForStats?.extraMinPerMonth < 0 ? 'negative': 'positive'">
                             {{calendarService.monthForStats?.extraMinPerMonth}}
                         </td>
-                    </tr>                    
+                    </tr>
                 </tbody>
             </table>
         </div>

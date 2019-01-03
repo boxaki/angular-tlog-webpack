@@ -5,26 +5,26 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Activate day</h4>
+                <h4 i18n="Header for activate-day modal" class="modal-title">New workday</h4>
             </div>
             <div class="modal-body">
                 <form class="form-inline" #timeForm="ngForm">
                     <div class="form-group">
-                        <label for="time">Required time:</label>
+                        <label i18n="Input required time" for="time">Required time:</label>
                         <input [(ngModel)]="requiredTime" type="text" id="time" name="time" placeholder="default: 450 min" />
                     </div>
                     <label class="radio-inline">
-                        <input type="radio" value="min" name="unit" [ngModel]="unit"> min
+                        <input i18n="Radio button min" type="radio" value="min" name="unit" [ngModel]="unit"> min
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" value="hr" name="unit" [ngModel]="unit"> hr
+                        <input i18n="Radio button hr" type="radio" value="hr" name="unit" [ngModel]="unit"> hr
                     </label>
 
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-success" id="ok" data-dismiss="modal" (click)="activateDay(timeForm)">OK</button>
-                <button type="submit" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                <button i18n="Ok button" type="submit" class="btn btn-success" id="ok" data-dismiss="modal" (click)="activateDay(timeForm)">OK</button>
+                <button i18n="Cancel button" type="submit" class="btn btn-danger" data-dismiss="modal">Cancel</button>
             </div>
         </div>
 

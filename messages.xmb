@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE messagebundle [
+<!ELEMENT messagebundle (msg)*>
+<!ATTLIST messagebundle class CDATA #IMPLIED>
+
+<!ELEMENT msg (#PCDATA|ph|source)*>
+<!ATTLIST msg id CDATA #IMPLIED>
+<!ATTLIST msg seq CDATA #IMPLIED>
+<!ATTLIST msg name CDATA #IMPLIED>
+<!ATTLIST msg desc CDATA #IMPLIED>
+<!ATTLIST msg meaning CDATA #IMPLIED>
+<!ATTLIST msg obsolete (obsolete) #IMPLIED>
+<!ATTLIST msg xml:space (default|preserve) "default">
+<!ATTLIST msg is_hidden CDATA #IMPLIED>
+
+<!ELEMENT source (#PCDATA)>
+
+<!ELEMENT ph (#PCDATA|ex)*>
+<!ATTLIST ph name CDATA #REQUIRED>
+
+<!ELEMENT ex (#PCDATA)>
+]>
+<messagebundle>
+  <msg id="2454050363478003966" desc="Login button"><source>src/app/login/login.component.ts:14</source>Login</msg>
+  <msg id="3301086086650990787" desc="Register button"><source>src/app/login/login.component.ts:15</source>Register</msg>
+  <msg id="8976037500950766110" desc="Stats required minutes"><source>src/app/calendar-view/monthly-stats/monthly-stats.component.ts:8</source><source>src/app/task-list-view/daily-stats/daily-stats.component.ts:8</source>Required minutes</msg>
+  <msg id="785663628607378553" desc="Stats sum of month"><source>src/app/calendar-view/monthly-stats/monthly-stats.component.ts:9</source>Sum of month</msg>
+  <msg id="7280322249036757341" desc="Stats extra minutes"><source>src/app/calendar-view/monthly-stats/monthly-stats.component.ts:10</source><source>src/app/task-list-view/daily-stats/daily-stats.component.ts:10</source>Extra minutes</msg>
+  <msg id="2890105555798819623" desc="Header for activate-day modal"><source>src/app/calendar-view/activate-day/activate-day.component.ts:8</source>New workday</msg>
+  <msg id="6428030917956715720" desc="Input required time"><source>src/app/calendar-view/activate-day/activate-day.component.ts:13</source>Required time:</msg>
+  <msg id="8998179362936748717" desc="Ok button"><source>src/app/calendar-view/activate-day/activate-day.component.ts:26</source>OK</msg>
+  <msg id="2159130950882492111" desc="Cancel button"><source>src/app/calendar-view/activate-day/activate-day.component.ts:27</source><source>src/app/task-list-view/edit-task/edit-task.component.ts:35</source><source>src/app/task-list-view/new-task/new-task.component.ts:32</source>Cancel</msg>
+  <msg id="4667673865076211922" desc="Task details taskId"><source>src/app/task-list-view/tasks/tasks.component.ts:5</source>Task Id</msg>
+  <msg id="2662644497259948010" desc="Task details comment"><source>src/app/task-list-view/tasks/tasks.component.ts:6</source>Comment</msg>
+  <msg id="3770761673682962465" desc="Task details start time"><source>src/app/task-list-view/tasks/tasks.component.ts:7</source>Start time</msg>
+  <msg id="3029887440722063094" desc="Task details end time"><source>src/app/task-list-view/tasks/tasks.component.ts:8</source>End time</msg>
+  <msg id="2827233633791350200" desc="Task details length"><source>src/app/task-list-view/tasks/tasks.component.ts:9</source>Length</msg>
+  <msg id="7585826646011739428" desc="Task details edit"><source>src/app/task-list-view/tasks/tasks.component.ts:10</source><source>src/app/task-list-view/tasks/task/task.component.ts:7</source>Edit</msg>
+  <msg id="7308826126120441757" desc="Link new task"><source>src/app/task-list-view/tasks/tasks.component.ts:17</source>+ New Task</msg>
+  <msg id="2447999559011467318" desc="Stats header sum of day"><source>src/app/task-list-view/daily-stats/daily-stats.component.ts:9</source>Sum of day</msg>
+  <msg id="3250071543990881387" desc="Edit-task title"><source>src/app/task-list-view/edit-task/edit-task.component.ts:8</source>Change task details</msg>
+  <msg id="7479769755804776171" desc="Input taskId"><source>src/app/task-list-view/edit-task/edit-task.component.ts:13</source><source>src/app/task-list-view/new-task/new-task.component.ts:13</source>task id:</msg>
+  <msg id="7773542128637568840" desc="Input comment"><source>src/app/task-list-view/edit-task/edit-task.component.ts:17</source><source>src/app/task-list-view/new-task/new-task.component.ts:17</source>comment:</msg>
+  <msg id="1449350424954542319" desc="Input start time"><source>src/app/task-list-view/edit-task/edit-task.component.ts:21</source><source>src/app/task-list-view/new-task/new-task.component.ts:21</source>start time:</msg>
+  <msg id="7700292718496801252" desc="Input end time"><source>src/app/task-list-view/edit-task/edit-task.component.ts:26</source><source>src/app/task-list-view/new-task/new-task.component.ts:25</source>end time:</msg>
+  <msg id="3251759404563225821" desc="Modify button"><source>src/app/task-list-view/edit-task/edit-task.component.ts:33</source>Modify</msg>
+  <msg id="7022070615528435141" desc="Delete button"><source>src/app/task-list-view/edit-task/edit-task.component.ts:34</source>Delete</msg>
+  <msg id="6896245792698395855" desc="New-task title"><source>src/app/task-list-view/new-task/new-task.component.ts:8</source>Add new task</msg>
+  <msg id="3249513483374643425" desc="Add button"><source>src/app/task-list-view/new-task/new-task.component.ts:31</source>Add</msg>
+</messagebundle>

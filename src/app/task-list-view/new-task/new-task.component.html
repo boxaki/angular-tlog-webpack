@@ -5,31 +5,31 @@
         <div class="modal-content col-xs-6">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Add new task</h4>
+                <h4 i18n="New-task title" class="modal-title">Add new task</h4>
             </div>
-            <div class="modal-body">                        
+            <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label for="taskId">task id:</label>
-                        <input [(ngModel)]="taskId" type="text" class="form-control" id="taskId" name="id"/>
+                        <label i18n="Input taskId" for="taskId">task id:</label>
+                        <input [(ngModel)]="taskId" type="text" class="form-control" id="taskId" name="id" />
                     </div>
                     <div class="form-group">
-                        <label for="comment">comment:</label>
-                        <textarea [(ngModel)]="comment"class="form-control" rows="2" id="comment" name="comment"></textarea>
+                        <label i18n="Input comment" for="comment">comment:</label>
+                        <textarea [(ngModel)]="comment" class="form-control" rows="2" id="comment" name="comment"></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="startTime">start time:</label>
-                        <input [(ngModel)]="startTime" type="text" class="form-control" id="startTime" name="startTime"/>
+                        <label i18n="Input start time" for="startTime">start time:</label>
+                        <input [(ngModel)]="startTime" type="text" class="form-control" id="startTime" name="startTime" />
                     </div>
                     <div class="form-group">
-                        <label for="endTime">end time:</label>
-                        <input [(ngModel)]="endTime" type="text" class="form-control" id="endTime" name="endTime"/>
+                        <label i18n="Input end time" for="endTime">end time:</label>
+                        <input [(ngModel)]="endTime" type="text" class="form-control" id="endTime" name="endTime" />
                     </div>
-                </form>                            
+                </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal" (click)="addNewTask()">Add</button>
-                <button class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                <button i18n="Add button" type="button" class="btn btn-success" data-dismiss="modal" (click)="addNewTask()">Add</button>
+                <button i18n="Cancel button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
             </div>
         </div>
 

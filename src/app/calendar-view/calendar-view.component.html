@@ -4,7 +4,11 @@
         <table class="table table-bordered">
             <thead class="text-center">
                 <tr>
-                    <th *ngFor="let day of days">{{day}}</th>
+                    <th *ngFor="let day of days">
+                        <ng-container i18n="Name of days">
+                            {day, select, Mon {Mon} Tue {Tue} Wed {Wed} Thu {Thu} Fri {Fri} Sat {Sat} Sun {Sun}}
+                        </ng-container>
+                    </th>
                 </tr>
             </thead>
             <tbody>

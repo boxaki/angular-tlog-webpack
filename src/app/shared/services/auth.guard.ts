@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from "@angular/router";
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { AuthTokenService } from './authToken.service';
 import { AuthService } from './auth.service';
 
@@ -10,7 +10,7 @@ export class AuthGuard implements CanActivate {
 
 
     canActivate(
-        next: ActivatedRouteSnapshot,
+        _next: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
     ): boolean {
         let url: string = state.url;
@@ -29,6 +29,3 @@ export class AuthGuard implements CanActivate {
         return false;
     }
 }
-
-
-
