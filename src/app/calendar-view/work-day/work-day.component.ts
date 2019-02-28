@@ -20,7 +20,11 @@ export class WorkDayComponent implements OnInit {
      * Selects one work day of the calendar for the task-list-view
      */
     setSelectedDay() {
-        this.dateService.setSelectedDay(this.day);
+        // this.dateService.setSelectedDay(this.day);
+        this.dateService.setSelectedDay(
+            new Date(this.day.year, this.day.month - 1, this.day.day)
+        );
+
     }
 
 }

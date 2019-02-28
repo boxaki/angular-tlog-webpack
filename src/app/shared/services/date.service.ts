@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-import { DayDate } from '../classes/dayDate';
-
 @Injectable()
 export class DateService {
 
@@ -14,11 +12,7 @@ export class DateService {
         return this.dateSource.asObservable();
     }
 
-    selectedDay = {  // Date ? // task service-be ? -> mi használja?
-        year: this.actualDate.getFullYear(),
-        month: this.actualDate.getMonth() + 1,
-        day: this.actualDate.getDate()
-    };
+    selectedDay = this.actualDate;
 
     constructor() {
         this.actualDate.setDate(1);
@@ -61,7 +55,7 @@ export class DateService {
      * Selects a day for the activate-day-component and/or for the task-list-view
      * @param selectedDay the day to select
      */
-    public setSelectedDay(selectedDay: DayDate): void {
+    public setSelectedDay(selectedDay: Date): void {
         this.selectedDay = selectedDay;
     }
 

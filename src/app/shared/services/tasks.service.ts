@@ -28,12 +28,16 @@ export class TasksService {
      */
     loadTasksAndStatsOfDay(): void {
         this.tasksChanged = true;
+        let year = this.dateService.selectedDay.getFullYear();
+        let month = this.dateService.selectedDay.getMonth() + 1;
+        let day = this.dateService.selectedDay.getDate();
+
         this.httpService
-            .getTasksOfDay(this.dateService.selectedDay.year, this.dateService.selectedDay.month, this.dateService.selectedDay.day)
+            .getTasksOfDay(year, month, day)
             .map((tasks) => tasks.sort(this.compareTimes))
             .subscribe(tasksOfDay => {
                 this._tasks.next(tasksOfDay);  // kell e behaviorSubject v observable tasks = taskOfDay v vmi hasonlo --> kiprobalni
-                this.getDailyStats(this.dateService.selectedDay.year, this.dateService.selectedDay.month, this.dateService.selectedDay.day);
+                this.getDailyStats(year, month, day);
             });
     }
 

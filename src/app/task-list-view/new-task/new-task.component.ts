@@ -29,9 +29,9 @@ export class NewTaskComponent implements OnInit {
   addNewTask(): void {
 
     let baseData = {
-      year: this.dateService.selectedDay.year,
-      month: this.dateService.selectedDay.month,
-      day: this.dateService.selectedDay.day,
+      year: this.dateService.selectedDay.getFullYear(),
+      month: this.dateService.selectedDay.getMonth() + 1,
+      day: this.dateService.selectedDay.getDate(),
       taskId: this.taskId,
       startTime: this.startTime
     };

@@ -34,9 +34,9 @@ export class EditTaskComponent implements OnInit {
   modifyTask() {
 
     let modifiedTask: ModifyTaskRB = {
-      year: this.dateService.selectedDay.year,
-      month: this.dateService.selectedDay.month,
-      day: this.dateService.selectedDay.day,
+      year: this.dateService.selectedDay.getFullYear(),
+      month: this.dateService.selectedDay.getMonth() + 1,
+      day: this.dateService.selectedDay.getDate(),
       taskId: this.tasksService.selectedTask.taskId,
       startTime: this.tasksService.selectedTask.startTime,
       newTaskId: this.taskId ? this.taskId : this.tasksService.selectedTask.taskId,
@@ -55,9 +55,9 @@ export class EditTaskComponent implements OnInit {
     if (confirm('Are you sure to delete task ?')) {
 
       let taskToDelete: DeleteTaskRB = {
-        year: this.dateService.selectedDay.year,
-        month: this.dateService.selectedDay.month,
-        day: this.dateService.selectedDay.day,
+        year: this.dateService.selectedDay.getFullYear(),
+        month: this.dateService.selectedDay.getMonth() + 1,
+        day: this.dateService.selectedDay.getDate(),
         taskId: this.taskId ? this.taskId : this.tasksService.selectedTask.taskId,
         startTime: this.startTime ? this.startTime : this.tasksService.selectedTask.startTime
       };
