@@ -6,13 +6,10 @@ export class DateService {
 
     private actualDate: Date = new Date();  // atrakni a constructorba
     private dateSource = new BehaviorSubject(this.actualDate);
-    // readonly currentDate = this.dateSource.asObservable();
 
     get currentDate() {
         return this.dateSource.asObservable();
     }
-
-    selectedDay = this.actualDate;
 
     constructor() {
         this.actualDate.setDate(1);
@@ -49,14 +46,6 @@ export class DateService {
     private setActualDate(date: Date): void {
         this.actualDate = date;
         this.dateSource.next(date);
-    }
-
-    /**
-     * Selects a day for the activate-day-component and/or for the task-list-view
-     * @param selectedDay the day to select
-     */
-    public setSelectedDay(selectedDay: Date): void {
-        this.selectedDay = selectedDay;
     }
 
     public setNow() { // refactor: constructor

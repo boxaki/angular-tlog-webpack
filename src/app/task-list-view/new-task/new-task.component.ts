@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 import { TasksService } from '../../shared/services/tasks.service';
-import { DateService } from '../../shared/services/date.service';
 
 import { StartTaskRB } from '../../shared/classes/startTaskRB';
 import { FinishTaskRB } from '../../shared/classes/finishTaskRB';
+import { SelectedDayService } from '../../shared/services/selectedDay.service';
 
 @Component({
   selector: 'my-new-task',
@@ -18,7 +18,7 @@ export class NewTaskComponent implements OnInit {
   endTime: string;
   defaultValue = '';
 
-  constructor(private tasksService: TasksService, private dateService: DateService) { }
+  constructor(private tasksService: TasksService, private selectedDayService: SelectedDayService) { }
 
   ngOnInit() {
   }
@@ -29,9 +29,9 @@ export class NewTaskComponent implements OnInit {
   addNewTask(): void {
 
     let baseData = {
-      year: this.dateService.selectedDay.getFullYear(),
-      month: this.dateService.selectedDay.getMonth() + 1,
-      day: this.dateService.selectedDay.getDate(),
+      year: this.selectedDayService.selectedDay.getFullYear(),
+      month: this.selectedDayService.selectedDay.getMonth() + 1,
+      day: this.selectedDayService.selectedDay.getDate(),
       taskId: this.taskId,
       startTime: this.startTime
     };

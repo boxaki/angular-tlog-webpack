@@ -32,16 +32,20 @@ export class MockHttpService {
     }
 };
 
+export class MockSelectedDayService { };
+
 describe('CalendarService', () => {
     let calendarService: CalendarService;
     let dateService;
     let httpService;
+    let selectedDayService;
 
     beforeEach(async(() => {
         dateService = new MockDateService();
         httpService = new MockHttpService();
+        selectedDayService = new MockSelectedDayService();
 
-        calendarService = new CalendarService(httpService, dateService);
+        calendarService = new CalendarService(httpService, dateService, selectedDayService);
     }));
 
     it('should be created', () => {

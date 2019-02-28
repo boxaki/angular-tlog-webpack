@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { Day } from '../../shared/classes/day';
-import { DateService } from '../../shared/services/date.service';
+import { SelectedDayService } from '../../shared/services/selectedDay.service';
 
 @Component({
     selector: 'my-simple-day',
@@ -11,7 +11,7 @@ import { DateService } from '../../shared/services/date.service';
 export class SimpleDayComponent implements OnInit {
     @Input() day: Day;
 
-    constructor(private dateService: DateService) {
+    constructor(private selectedDayService: SelectedDayService) {
     }
 
     ngOnInit() {
@@ -21,8 +21,7 @@ export class SimpleDayComponent implements OnInit {
      * Selects one day of the calendar for activate-day component
      */
     setSelectedDay(): void {
-        // this.dateService.setSelectedDay(this.day);
-        this.dateService.setSelectedDay(
+        this.selectedDayService.setSelectedDay(
             new Date(this.day.year, this.day.month - 1, this.day.day)
         );
 

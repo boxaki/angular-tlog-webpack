@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
 import { HttpService } from '../services/http.service';
-import { DateService } from '../services/date.service';
 
 import { Task } from '../classes/task';
 import { WorkDay } from '../classes/workDay';
@@ -11,6 +10,7 @@ import { ModifyTaskRB } from '../classes/modifyTaskRB';
 import { DeleteTaskRB } from '../classes/deleteTaskRB';
 
 import { BehaviorSubject } from 'rxjs';
+import { SelectedDayService } from './selectedDay.service';
 
 @Injectable()
 export class TasksService {
@@ -21,16 +21,16 @@ export class TasksService {
     workDayForStats: WorkDay; // megváltoztatni Observable-re?
     tasksChanged = false;
 
-    constructor(private httpService: HttpService, private dateService: DateService) { }
+    constructor(private httpService: HttpService, private selectedDayService: SelectedDayService) { }
 
     /**
      * Loads the task and stats for task-list-view. Sorts the tasks by start time.
      */
     loadTasksAndStatsOfDay(): void {
         this.tasksChanged = true;
-        let year = this.dateService.selectedDay.getFullYear();
-        let month = this.dateService.selectedDay.getMonth() + 1;
-        let day = this.dateService.selectedDay.getDate();
+        let year = this.selectedDayService.selectedDay.getFullYear();
+        let month = this.selectedDayService.selectedDay.getMonth() + 1;
+        let day = this.selectedDayService.selectedDay.getDate();
 
         this.httpService
             .getTasksOfDay(year, month, day)

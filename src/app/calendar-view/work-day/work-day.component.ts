@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { DateService } from '../../shared/services/date.service';
 import { Day } from '../../shared/classes/day';
+import { SelectedDayService } from '../../shared/services/selectedDay.service';
 
 @Component({
     selector: 'my-work-day',
@@ -11,7 +11,7 @@ import { Day } from '../../shared/classes/day';
 export class WorkDayComponent implements OnInit {
     @Input() day: Day;
 
-    constructor(private dateService: DateService) { }
+    constructor(private selectedDayService: SelectedDayService) { }
 
     ngOnInit() {
     }
@@ -20,8 +20,7 @@ export class WorkDayComponent implements OnInit {
      * Selects one work day of the calendar for the task-list-view
      */
     setSelectedDay() {
-        // this.dateService.setSelectedDay(this.day);
-        this.dateService.setSelectedDay(
+        this.selectedDayService.setSelectedDay(
             new Date(this.day.year, this.day.month - 1, this.day.day)
         );
 

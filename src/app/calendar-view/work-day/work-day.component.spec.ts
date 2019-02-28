@@ -2,8 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { WorkDayComponent } from './work-day.component';
-import { DateService } from '../../shared/services/date.service';
+// import { DateService } from '../../shared/services/date.service';
 import { Day } from '../../shared/classes/day';
+import { SelectedDayService } from '../../shared/services/selectedDay.service';
 
 describe('WorkDayComponent', () => {
   let component: WorkDayComponent;
@@ -11,12 +12,12 @@ describe('WorkDayComponent', () => {
   let aEl: HTMLElement;
 
   beforeEach(() => {
-    const spy = jasmine.createSpyObj('DateService', ['setSelectedDay']);
+    const spy = jasmine.createSpyObj('SelectedDayService', ['setSelectedDay']);
 
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
       declarations: [WorkDayComponent],
-      providers: [{ provide: DateService, useValue: spy }]
+      providers: [{ provide: SelectedDayService, useValue: spy }]
     });
 
     let fixture: ComponentFixture<WorkDayComponent> = TestBed.createComponent(WorkDayComponent);
@@ -34,7 +35,7 @@ describe('WorkDayComponent', () => {
   });
 
   it('should call #DateService.setSelectedDay', () => {
-    let dateServiceSpy: jasmine.SpyObj<DateService> = TestBed.get(DateService);
+    let dateServiceSpy: jasmine.SpyObj<SelectedDayService> = TestBed.get(SelectedDayService);
 
     component.setSelectedDay();
     expect(dateServiceSpy.setSelectedDay).toHaveBeenCalledWith(expectedDay);

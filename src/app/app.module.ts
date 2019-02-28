@@ -33,6 +33,7 @@ import { AuthService } from './shared/services/auth.service';
 import { AuthGuard } from './shared/services/auth.guard';
 import { HttpErrorInterceptor } from './shared/services/httpError.interceptor';
 import { AuthTokenService } from './shared/services/authToken.service';
+import { SelectedDayService } from './shared/services/selectedDay.service';
 
 @NgModule({
   imports: [
@@ -64,6 +65,7 @@ import { AuthTokenService } from './shared/services/authToken.service';
     AuthGuard,
     ApiService,
     DateService,
+    SelectedDayService,
     HttpService,
     CalendarService,
     TasksService,

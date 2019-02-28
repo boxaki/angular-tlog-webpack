@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 import { TasksService } from '../../shared/services/tasks.service';
-import { DateService } from '../../shared/services/date.service';
 
 import { ModifyTaskRB } from '../../shared/classes/modifyTaskRB';
 import { Task } from '../../shared/classes/task';
 import { DeleteTaskRB } from '../../shared/classes/deleteTaskRB';
+import { SelectedDayService } from '../../shared/services/selectedDay.service';
 
 @Component({
   selector: 'my-edit-task',
@@ -20,7 +20,7 @@ export class EditTaskComponent implements OnInit {
 
   selectedTask: Task;
 
-  constructor(public tasksService: TasksService, private dateService: DateService) { }
+  constructor(public tasksService: TasksService, private selectedDayService: SelectedDayService) { }
 
   ngOnInit() {
     if (this.tasksService.selectedTask) {
@@ -34,9 +34,9 @@ export class EditTaskComponent implements OnInit {
   modifyTask() {
 
     let modifiedTask: ModifyTaskRB = {
-      year: this.dateService.selectedDay.getFullYear(),
-      month: this.dateService.selectedDay.getMonth() + 1,
-      day: this.dateService.selectedDay.getDate(),
+      year: this.selectedDayService.selectedDay.getFullYear(),
+      month: this.selectedDayService.selectedDay.getMonth() + 1,
+      day: this.selectedDayService.selectedDay.getDate(),
       taskId: this.tasksService.selectedTask.taskId,
       startTime: this.tasksService.selectedTask.startTime,
       newTaskId: this.taskId ? this.taskId : this.tasksService.selectedTask.taskId,
@@ -55,9 +55,9 @@ export class EditTaskComponent implements OnInit {
     if (confirm('Are you sure to delete task ?')) {
 
       let taskToDelete: DeleteTaskRB = {
-        year: this.dateService.selectedDay.getFullYear(),
-        month: this.dateService.selectedDay.getMonth() + 1,
-        day: this.dateService.selectedDay.getDate(),
+        year: this.selectedDayService.selectedDay.getFullYear(),
+        month: this.selectedDayService.selectedDay.getMonth() + 1,
+        day: this.selectedDayService.selectedDay.getDate(),
         taskId: this.taskId ? this.taskId : this.tasksService.selectedTask.taskId,
         startTime: this.startTime ? this.startTime : this.tasksService.selectedTask.startTime
       };

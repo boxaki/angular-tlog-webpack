@@ -10,6 +10,7 @@ import { Day } from '../classes/day';
 import { WorkDay } from '../classes/workDay';
 import { WorkMonth } from '../classes/workMonth';
 import { WorkDayRB } from '../classes/workDayRB';
+import { SelectedDayService } from './selectedDay.service';
 
 @Injectable()
 export class CalendarService {
@@ -21,7 +22,9 @@ export class CalendarService {
 
     private actualDay: Date = new Date();
 
-    constructor(private httpService: HttpService, private dateService: DateService) {
+    constructor(
+        private httpService: HttpService, private dateService: DateService, private selectedDayService: SelectedDayService
+    ) {
         this.dateService.currentDate.subscribe(actualDay => {
             this.actualDay = actualDay;
             this.updateCalendarAndStats();
@@ -124,9 +127,9 @@ export class CalendarService {
     activateDay(requiredMinPerDay: number): void {
 
         let newDay: WorkDayRB = {
-            year: this.dateService.selectedDay.getFullYear(),
-            month: this.dateService.selectedDay.getMonth() + 1,
-            day: this.dateService.selectedDay.getDate(),
+            year: this.selectedDayService.selectedDay.getFullYear(),
+            month: this.selectedDayService.selectedDay.getMonth() + 1,
+            day: this.selectedDayService.selectedDay.getDate(),
             requiredMinPerDay: requiredMinPerDay
         };
 
