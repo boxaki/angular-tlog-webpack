@@ -8,12 +8,12 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { tap } from 'rxjs/operators';
-import { AuthTokenService } from './authToken.service';
+import { SessionService } from './session.service';
 import { Router } from '@angular/router';
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
-    constructor(private authTokenService: AuthTokenService, private router: Router) { }
+    constructor(private sessionService: SessionService, private router: Router) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
@@ -24,7 +24,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
                     if (err instanceof HttpErrorResponse) {
                         if (err.status === 401) {
                             console.log('interceptor 401');
-                            this.authTokenService.removeJwt();
+                            this.sessionService.removeJwt();
                             this.router.navigate(['/login']);
                         }
                     }

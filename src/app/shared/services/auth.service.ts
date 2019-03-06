@@ -5,7 +5,8 @@ import { UserRB } from '../classes/userRB';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { TimerObservable } from 'rxjs/observable/TimerObservable';
 import { switchMap } from 'rxjs/operators';
-import { AuthTokenService } from './authToken.service';
+import { SessionService } from './session.service';
+import { User } from '../classes/user';
 
 const refreshIntervalInSec = 4 * 60;
 
@@ -15,9 +16,9 @@ export class AuthService {
     timer;
 
     constructor(
-        private router: Router, private httpService: HttpService, private authTokenService: AuthTokenService
+        private router: Router, private httpService: HttpService, private sessionService: SessionService
     ) {
-        if (this.authTokenService.isJwtExists()) {
+        if (this.sessionService.isJwtExists()) {
             httpService.refresh().subscribe(
                 res => {
                     this.setSession(res);
@@ -39,11 +40,16 @@ export class AuthService {
         );
     }
 
-    private setSession(authResult: HttpResponse<Response>) {
+    private setSession(authResult: HttpResponse<User>) {
         let authHeader = authResult.headers.get('authorization');
         let jwt = authHeader.split(' ')[1];
+        let userName = authResult.body.name;
+        console.log('username: ' + userName);
 
-        this.authTokenService.setJwt(jwt);
+        if (!this.sessionService.isLoggedIn) {
+            this.sessionService.setUsername(userName);
+        }
+        this.sessionService.setJwt(jwt);
     }
 
     private setRefreshInterval() {
@@ -77,7 +83,7 @@ export class AuthService {
             if (confirm('Authentication failure!')) { }
         } else if (error.status === 401) {
             if (confirm('You are not logged in. Please log in to continue!')) { }
-            this.authTokenService.isLoggedIn = false;
+            this.sessionService.isLoggedIn = false;
         }
     }
 
@@ -86,7 +92,7 @@ export class AuthService {
             this.timer.unsubscribe();
         }
 
-        this.authTokenService.removeJwt();
+        this.sessionService.removeJwt();
         // this.router.navigate(['/login']);  ez lenne a jo megoldas, a login.component routerlink helyett,
         // csak a css ben at kell írni, hogy az <a href nelkul linkkent jelenjen meg
     }

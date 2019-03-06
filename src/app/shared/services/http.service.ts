@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { Task } from '../classes/task';
 import { WorkDay } from '../classes/workDay';
 import { WorkMonth } from '../classes/workMonth';
+import { User } from '../classes/user';
 
 import { WorkDayRB } from '../classes/workDayRB';
 import { StartTaskRB } from '../classes/startTaskRB';
@@ -131,7 +132,7 @@ export class HttpService {
         return this.http.put<Task>(url, taskToDelete, { headers: this.getHeaders() });
     }
 
-    login(user: UserRB): Observable<HttpResponse<Response>> {
+    login(user: UserRB): Observable<HttpResponse<User>> {
         const url = `${this.backendUrl}/login`;
 
         let headers = new HttpHeaders();
@@ -146,7 +147,7 @@ export class HttpService {
         return this.http.post<any>(url, user, { headers: this.getHeaders(), observe: 'response' });
     }
 
-    refresh(): Observable<HttpResponse<Response>> {
+    refresh(): Observable<HttpResponse<User>> {
         const url = `${this.backendUrl}/refresh`;
 
         return this.http.get<any>(url, { headers: this.getHeaders(), observe: 'response' });

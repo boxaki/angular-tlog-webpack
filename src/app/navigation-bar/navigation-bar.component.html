@@ -1,9 +1,9 @@
 <nav class="navbar navbar-inverse">
-    <div class="container-fluid">
+    <div class="container-fluid" *ngIf="sessionService.isLoggedIn; else loggedOut">
         <div class="navbar-header">
-            <span class="navbar-brand">Timelogger</span>
+            <span class="navbar-brand">{{getUsername()}}</span>
         </div>
-        <ul class="nav navbar-nav" *ngIf="authTokenService.isLoggedIn">
+        <ul class="nav navbar-nav">
             <li [routerLinkActive]="['active']">
                 <a routerLink="/calendar" data-toggle="tooltip" title="Calendar view" (click)="onSelect('calendar')">
                     <span class="glyphicon glyphicon-calendar"></span>
@@ -15,7 +15,7 @@
                 </a>
             </li>
         </ul>
-        <ul class="nav navbar-nav navbar-right" *ngIf="authTokenService.isLoggedIn">
+        <ul class="nav navbar-nav navbar-right">
             <li>
                 <a routerLink="/login" (click)="logout()">
                     <span i18n="Logout" class="glyphicon glyphicon-log-out"> Logout</span>
@@ -23,4 +23,11 @@
             </li>
         </ul>
     </div>
+    <ng-template #loggedOut>
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <span class="navbar-brand">Timelogger</span>
+            </div>
+        </div>
+    </ng-template>
 </nav>

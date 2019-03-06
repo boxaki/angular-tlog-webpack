@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../shared/services/auth.service';
-import { AuthTokenService } from '../shared/services/authToken.service';
+import { SessionService } from '../shared/services/session.service';
 
 @Component({
     selector: 'my-navigation-bar',
@@ -10,7 +10,7 @@ import { AuthTokenService } from '../shared/services/authToken.service';
 export class NavigationBarComponent implements OnInit {
     selectedRoute = 'calendar';
 
-    constructor(public authTokenService: AuthTokenService, private authService: AuthService) { }
+    constructor(public sessionService: SessionService, private authService: AuthService) { }
 
     ngOnInit() {
     }
@@ -21,6 +21,10 @@ export class NavigationBarComponent implements OnInit {
 
     logout() {
         this.authService.logout();
+    }
+
+    getUsername() { // kell e, vagy inkább template-ben service property bind
+        return this.sessionService.getUsername();
     }
 
 }
