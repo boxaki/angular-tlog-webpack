@@ -8,7 +8,6 @@ export class DateService {
     private dateSource = new BehaviorSubject(this.actualDate);
 
     get currentDate() {
-        console.log('get currentDate');
         return this.dateSource.asObservable();
     }
 

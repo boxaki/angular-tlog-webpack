@@ -23,9 +23,12 @@ export class HttpErrorInterceptor implements HttpInterceptor {
                 (err: any) => {
                     if (err instanceof HttpErrorResponse) {
                         if (err.status === 401) {
-                            console.log('interceptor 401');
-                            this.sessionService.removeJwt();
+                            this.sessionService.removeSession();
                             this.router.navigate(['/login']);
+                        } else if (err.status === 403) {
+                            if (confirm(err.error)) { }
+                        } else if (err.status === 409) {
+                            if (confirm('Username is taken!')) { }
                         }
                     }
                 }

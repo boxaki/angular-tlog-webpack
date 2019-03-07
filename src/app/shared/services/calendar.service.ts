@@ -137,11 +137,11 @@ export class CalendarService {
             .activateDay(newDay)
             .subscribe(
                 () => this.updateCalendarAndStats(),
-                error => this.handleError(error, newDay)
+                error => this.handleWeekendError(error, newDay)
             );
     }
 
-    private handleError(error: HttpErrorResponse, newDay: WorkDayRB) {
+    private handleWeekendError(error: HttpErrorResponse, newDay: WorkDayRB) {
         if (error.status === 302) {
             if (confirm('Do you want to activate weekend day?')) {
                 this.activateWeekend(newDay);

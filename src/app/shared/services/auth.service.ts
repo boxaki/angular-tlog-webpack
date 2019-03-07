@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpService } from './http.service';
 import { UserRB } from '../classes/userRB';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 import { TimerObservable } from 'rxjs/observable/TimerObservable';
 import { switchMap } from 'rxjs/operators';
 import { SessionService } from './session.service';
@@ -66,25 +66,11 @@ export class AuthService {
     }
 
     public register(user: UserRB) {
-        this.httpService.register(user).subscribe(
+        this.httpService.register(user).subscribe(  //máshol subscribe
             () => {
                 if (confirm('Successful registration you can log in!')) { }
-            },
-            error => {
-                this.handleError(error);
             }
         );
-    }
-
-    private handleError(error: HttpErrorResponse) {
-        if (error.status === 409) {
-            if (confirm('Username is taken!')) { }
-        } else if (error.status === 403) {
-            if (confirm('Authentication failure!')) { }
-        } else if (error.status === 401) {
-            if (confirm('You are not logged in. Please log in to continue!')) { }
-            this.sessionService.isLoggedIn = false;
-        }
     }
 
     public logout() {
@@ -92,7 +78,7 @@ export class AuthService {
             this.timer.unsubscribe();
         }
 
-        this.sessionService.removeJwt();
+        this.sessionService.removeSession();
         // this.router.navigate(['/login']);  ez lenne a jo megoldas, a login.component routerlink helyett,
         // csak a css ben at kell írni, hogy az <a href nelkul linkkent jelenjen meg
     }

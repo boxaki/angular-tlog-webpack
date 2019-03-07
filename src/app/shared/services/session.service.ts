@@ -16,7 +16,6 @@ export class SessionService {
     get username(): Observable<string> {
         let userName = sessionStorage.getItem('username');
         if (userName) {
-            console.log('username: ' + userName);
             return of(userName);
         }
         return of('');
@@ -30,9 +29,8 @@ export class SessionService {
         // this.loggedInSource.next(true);
     }
 
-    removeJwt() {
+    private removeJwt() {
         sessionStorage.removeItem('jwt');
-        this.isLoggedIn = false;
         // this.loggedInSource.next(false);
     }
 
@@ -48,7 +46,13 @@ export class SessionService {
         return sessionStorage.getItem('username');
     }
 
-    removeUsername() {
+    private removeUsername() {
         sessionStorage.removeItem('username');
+    }
+
+    removeSession() {
+        this.removeUsername();
+        this.removeJwt();
+        this.isLoggedIn = false;
     }
 }
