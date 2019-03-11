@@ -3,19 +3,15 @@ import { BehaviorSubject } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { HttpService } from './http.service';
-import { DateService } from './date.service';
 
 import { Week } from '../classes/week';
 import { Day } from '../classes/day';
 import { WorkDay } from '../classes/workDay';
-import { WorkMonth } from '../classes/workMonth';
 import { WorkDayRB } from '../classes/workDayRB';
 import { SelectedDayService } from './selectedDay.service';
 
 @Injectable()
 export class CalendarService {
-    monthForStats: WorkMonth; // kell e neki saját service (srp)?
-
     private month: Week[];
     private monthSource = new BehaviorSubject(this.month);
     currentMonth = this.monthSource.asObservable();
@@ -23,24 +19,21 @@ export class CalendarService {
     private actualDay: Date = new Date();
 
     constructor(
-        private httpService: HttpService, private dateService: DateService, private selectedDayService: SelectedDayService
-    ) {
-        this.dateService.currentDate.subscribe(actualDay => {
-            this.actualDay = actualDay;
-            this.updateCalendarAndStats();
-        });
-    }
+        private httpService: HttpService, private selectedDayService: SelectedDayService
+    ) { }
 
     /**
      * Creates the calendar and updates the statistics for the selected month
      */
-    updateCalendarAndStats(): void {
+    updateCalendarAndStats(actualDate?: Date): void {
+        if (actualDate) {
+            this.actualDay = actualDate;
+        }
         this.httpService.getMonthsData(this.actualDay.getFullYear(), this.actualDay.getMonth() + 1)
             .map((days) => days.sort(this.compareActualDays))
             .subscribe(workDays => {
                 this.createCalendar(workDays);
                 this.monthSource.next(this.month);
-                this.updateMonthlyStats();
             });
     }
 
@@ -111,13 +104,6 @@ export class CalendarService {
 
     private getLengthOfMonth(year: number, month: number): number {
         return new Date(year, month + 1, 0).getDate();
-    }
-
-    private updateMonthlyStats(): void {
-        this.httpService.getMonthlyStats(this.actualDay.getFullYear(), this.actualDay.getMonth() + 1)
-            .subscribe(workMonth => {
-                this.monthForStats = workMonth;
-            });
     }
 
     /**

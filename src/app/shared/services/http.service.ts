@@ -42,8 +42,7 @@ export class HttpService {
         const url = `${this.backendUrl}/workmonths`;
 
         return this.http.get<WorkMonth[]>(url, { headers: this.getHeaders() })
-            .map(days => days.filter(day => day.date === date)) // find ?
-            .map(workMonth => workMonth[0]);
+            .map(days => days.find(day => day.date === date));
     }
 
     /**
@@ -56,8 +55,7 @@ export class HttpService {
         let date = year + '-' + (month < 10 ? '0' + month : month) + '-' + (day < 10 ? '0' + day : day);
 
         return this.getMonthsData(year, month)
-            .map(days => days.filter(workDay => workDay.actualDay === date))
-            .map(workDays => workDays[0]);
+            .map(days => days.find(workDay => workDay.actualDay === date));
     }
 
     /**

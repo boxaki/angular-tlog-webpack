@@ -34,6 +34,7 @@ import { AuthGuard } from './shared/services/auth.guard';
 import { HttpErrorInterceptor } from './shared/services/httpError.interceptor';
 import { SessionService } from './shared/services/session.service';
 import { SelectedDayService } from './shared/services/selectedDay.service';
+import { MonthlyStatsService } from './shared/services/monthlyStats.service';
 
 @NgModule({
   imports: [
@@ -74,7 +75,8 @@ import { SelectedDayService } from './shared/services/selectedDay.service';
       useClass: HttpErrorInterceptor,
       multi: true
     },
-    SessionService
+    SessionService,
+    MonthlyStatsService
   ],
   bootstrap: [AppComponent]
 })

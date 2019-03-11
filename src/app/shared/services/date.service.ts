@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable()
 export class DateService {
 
-    private actualDate: Date = new Date();  // atrakni a constructorba
+    private actualDate: Date = new Date();
     private dateSource = new BehaviorSubject(this.actualDate);
 
     get currentDate() {
@@ -48,9 +48,7 @@ export class DateService {
         this.dateSource.next(date);
     }
 
-    public setNow() { // refactor: constructor
-        let now = new Date();
-        now.setDate(1);
+    public setNow() {
         this.setActualDate(new Date());
     }
 }

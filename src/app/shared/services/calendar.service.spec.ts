@@ -41,11 +41,11 @@ describe('CalendarService', () => {
     let selectedDayService;
 
     beforeEach(async(() => {
-        dateService = new MockDateService();
+        // dateService = new MockDateService();
         httpService = new MockHttpService();
         selectedDayService = new MockSelectedDayService();
 
-        calendarService = new CalendarService(httpService, dateService, selectedDayService);
+        calendarService = new CalendarService(httpService, selectedDayService);
     }));
 
     it('should be created', () => {

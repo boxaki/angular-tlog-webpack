@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CalendarService } from '../../shared/services/calendar.service';
+import { MonthlyStatsService } from '../../shared/services/monthlyStats.service';
 
 @Component({
   selector: 'my-monthly-stats',
@@ -8,7 +8,7 @@ import { CalendarService } from '../../shared/services/calendar.service';
 })
 export class MonthlyStatsComponent implements OnInit {
 
-  constructor(protected calendarService: CalendarService) { }
+  constructor(public monthlyStatsService: MonthlyStatsService) { }
 
   ngOnInit() {
   }

@@ -11,11 +11,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>{{calendarService.monthForStats?.requiredMinPerMonth}}</td>
-                        <td>{{calendarService.monthForStats?.sumPerMonth}}</td>
-                        <td [ngClass]="calendarService.monthForStats?.extraMinPerMonth < 0 ? 'negative': 'positive'">
-                            {{calendarService.monthForStats?.extraMinPerMonth}}
+                    <tr *ngIf="monthlyStatsService.monthForStats$ | async as stats">
+                        <td>{{stats.requiredMinPerMonth}}</td>
+                        <td>{{stats.sumPerMonth}}</td>
+                        <td [ngClass]="stats.extraMinPerMonth < 0 ? 'negative': 'positive'">
+                            {{stats.extraMinPerMonth}}
                         </td>
                     </tr>
                 </tbody>

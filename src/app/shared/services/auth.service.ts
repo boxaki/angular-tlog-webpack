@@ -44,7 +44,6 @@ export class AuthService {
         let authHeader = authResult.headers.get('authorization');
         let jwt = authHeader.split(' ')[1];
         let userName = authResult.body.name;
-        console.log('username: ' + userName);
 
         if (!this.sessionService.isLoggedIn) {
             this.sessionService.setUsername(userName);
@@ -66,7 +65,7 @@ export class AuthService {
     }
 
     public register(user: UserRB) {
-        this.httpService.register(user).subscribe(  //máshol subscribe
+        this.httpService.register(user).subscribe(  // máshol subscribe
             () => {
                 if (confirm('Successful registration you can log in!')) { }
             }

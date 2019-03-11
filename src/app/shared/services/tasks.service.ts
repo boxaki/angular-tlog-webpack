@@ -19,7 +19,6 @@ export class TasksService {
 
     selectedTask: Task;
     workDayForStats: WorkDay; // megváltoztatni Observable-re?
-    tasksChanged = false;
 
     constructor(private httpService: HttpService, private selectedDayService: SelectedDayService) { }
 
@@ -27,7 +26,6 @@ export class TasksService {
      * Loads the task and stats for task-list-view. Sorts the tasks by start time.
      */
     loadTasksAndStatsOfDay(): void {
-        this.tasksChanged = true;
         let year = this.selectedDayService.selectedDay.getFullYear();
         let month = this.selectedDayService.selectedDay.getMonth() + 1;
         let day = this.selectedDayService.selectedDay.getDate();
@@ -60,7 +58,6 @@ export class TasksService {
 
         this.httpService.startNewTask(newTask).flatMap(() =>
             this.httpService.finishTask(finishNewTask)).subscribe(() => {
-                this.tasksChanged = true;
                 this.loadTasksAndStatsOfDay();
             });
     }
@@ -80,7 +77,6 @@ export class TasksService {
     modifyTask(modifiedTask: ModifyTaskRB): void {
         this.httpService.modifyTask(modifiedTask)
             .subscribe(() => {
-                this.tasksChanged = true;
                 this.loadTasksAndStatsOfDay();
             });
     }
@@ -91,7 +87,6 @@ export class TasksService {
      */
     startNewTask(newTask: StartTaskRB): void {
         this.httpService.startNewTask(newTask).subscribe(() => {
-            this.tasksChanged = true;
             this.loadTasksAndStatsOfDay();
         });
     }
@@ -102,7 +97,6 @@ export class TasksService {
      */
     deleteTask(taskToDelete: DeleteTaskRB): void {
         this.httpService.deleteTask(taskToDelete).subscribe(() => {
-            this.tasksChanged = true;
             this.loadTasksAndStatsOfDay();
         });
     }
@@ -113,15 +107,8 @@ export class TasksService {
      * @param month
      * @param day
      */
-    getDailyStats(year: number, month: number, day: number): void { // this.tasksChanged ide , mashonnet ki
+    getDailyStats(year: number, month: number, day: number): void {
         this.httpService.getDailyStats(year, month, day)
             .subscribe(workDay => this.workDayForStats = workDay);
-    }
-
-    /**
-     * Sets the task to unchanged (default state).
-     */
-    setTasksNotChanged() {
-        this.tasksChanged = false;
     }
 }
